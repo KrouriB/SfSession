@@ -1,5 +1,49 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}Liste Stagiaire{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <h1>Liste des stagiaire :</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Sexe</th>
+                <th>Date de Naissance</th>
+                <th>Ville</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th>En session</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stagiaire in stagiaires %}
+                <tr>
+                    <th>{{stagiaire.nom}}</th>
+                    <th>{{stagiaire.prenom}}</th>
+                    <th>{{stagiaire.sexe}}</th>
+                    <th>{{stagiaire.dateNaissance}}</th>
+                    <th>{{stagiaire.ville}}</th>
+                    <th>{{stagiaire.email}}</th>
+                    <th>{{stagiaire.telephone}}</th>
+                    {% set enSession = false %}
+                    {% set break = false %}
+                    {% for aSession in stagiaire.session if not break %}
+                        {% if aSession.dateDebut <= "now"|date && aSession.dateFin >= "now"|date %} <!-- TODO: A tester  -->
+                            {% set enSession = true %}
+                            {% set break = true %}
+                        {% endif %}
+                    {% endfor %}
+                    <th>
+                        {% if enSession == true %}
+                            Oui
+                        {% else %}
+                            Non
+                        {% endif %}
+                    </th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
