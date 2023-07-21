@@ -57,13 +57,33 @@ class SessionRepository extends ServiceEntityRepository
         ;
     }
 
-//    public function findOneBySomeField($value): ?Session
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+public function findCurrentSessionSessionPage(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('CURDATE() BETWEEN s.date_debut AND s.date_fin')
+            ->orderBy('s.date_fin', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findPastSessionSessionPage(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.date_fin < CURDATE()')
+            ->orderBy('s.date_fin', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findNextSessionSessionPage(): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.date_debut > CURDATE()')
+            ->orderBy('s.date_debut', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
