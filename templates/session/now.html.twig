@@ -2,4 +2,30 @@
 
 {% block title %}{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <h1>Session en cours :</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la Session</th>
+                <th>Date de début</th>
+                <th>Date de fin</th>
+                <th>Nombre de place théorique</th>
+                <th>Nombre de place reservées</th>
+                <th>Détail</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+                <tr>
+                    <th>{{session.nom}}</th>
+                    <th>{{session.dateDebut|date('d/m/Y')}}</th>
+                    <th>{{session.dateFin|date('d/m/Y')}}</th>
+                    <th>{{session.nombrePlaceTheorique}}</th>
+                    <th>{{session.stagiaires|length}}</th>
+                    <th><a href="#">placeholder icone</a></th>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
