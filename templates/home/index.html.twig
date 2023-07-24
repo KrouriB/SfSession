@@ -4,8 +4,147 @@
 
 {% block body %}
     {% if app.user %}
-            
+            <h1>Acceuil</h1>
+            <div>
+                <h2>Sessions en cours</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Statut</th>
+                            <th>Formation</th>
+                            <th>Session</th>
+                            <th>Date de début</th>
+                            <th>Date de fin</th>
+                            <th>Inscrit</th>
+                            <th>Détail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for session in now %}
+                            <tr>
+                                <th>
+                                    {% if session.stagiaires|length == session.nombrePlaceTheorique %}
+                                        <span class="complet">{{ "complète"|upper }}</span>
+                                    {% endif %}
+                                </th>
+                                <th>{{session.formation.nom}}</th>
+                                <th>{{session.nom}}</th>
+                                <th>{{session.dateDebut|date('d/m/Y')}}</th>
+                                <th>{{session.dateFin|date('d/m/Y')}}</th>
+                                <th>{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</th>
+                                <th><a href="#">placeholder icone</a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                            <h2>Sessions à venir</h2>
+                            <table>
+                    <thead>
+                        <tr>
+                            <th>Statut</th>
+                            <th>Formation</th>
+                            <th>Session</th>
+                            <th>Date de début</th>
+                            <th>Date de fin</th>
+                            <th>Inscrit</th>
+                            <th>Détail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for session in futur %}
+                            <tr>
+                                <th>
+                                    {% if session.stagiaires|length == session.nombrePlaceTheorique %}
+                                        <span class="complet"> {{ "complète"|upper }} </span>
+                                    {% endif %}
+                                </th>
+                                <th>{{session.formation.nom}}</th>
+                                <th>{{session.nom}}</th>
+                                <th>{{session.dateDebut|date('d/m/Y')}}</th>
+                                <th>{{session.dateFin|date('d/m/Y')}}</th>
+                                <th>{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</th>
+                                <th><a href="#">placeholder icone</a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                            <h2>Sessions terminées</h2>
+                            <table>
+                    <thead>
+                        <tr>
+                            <th>Statut</th>
+                            <th>Formation</th>
+                            <th>Session</th>
+                            <th>Date de début</th>
+                            <th>Date de fin</th>
+                            <th>Inscrit</th>
+                            <th>Détail</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for session in past %}
+                            <tr>
+                                <th>
+                                    {% if session.stagiaires|length == session.nombrePlaceTheorique %}
+                                        <span class="complet"> {{ "complète"|upper }} </span>
+                                    {% endif %}
+                                </th>
+                                <th>{{session.formation.nom}}</th>
+                                <th>{{session.nom}}</th>
+                                <th>{{session.dateDebut|date('d/m/Y')}}</th>
+                                <th>{{session.dateFin|date('d/m/Y')}}</th>
+                                <th>{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</th>
+                                <th><a href="#">placeholder icone</a></th>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
     {% else %}
-            
+            <div>
+                {% for flash_error in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+
+                <h1>Register</h1>
+
+                {{ form_errors(registrationForm) }}
+
+                {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.pseudo) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Password'
+                    }) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+
+                    <button type="submit" class="btn">Register</button>
+                {{ form_end(registrationForm) }}
+            </div>
+            <div>
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
+                
+                    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                    <label for="inputEmail">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                    <label for="inputPassword">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                
+                    <input type="hidden" name="_csrf_token"
+                        value="{{ csrf_token('authenticate') }}"
+                    >
+                
+                    <button class="btn btn-lg btn-primary" type="submit">
+                        Sign in
+                    </button>
+                </form>
+            </div>
     {% endif %}
 {% endblock %}
