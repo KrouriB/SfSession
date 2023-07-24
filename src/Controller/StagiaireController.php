@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Stagiaire;
 use App\Repository\StagiaireRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
