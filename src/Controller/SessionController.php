@@ -38,7 +38,7 @@ class SessionController extends AbstractController
     #[Route('/session/futur', name: 'futur_session')]
     public function futur(SessionRepository $sessionRepository): Response
     {
-        $sessions = $sessionRepository->findFuturSessionSessionPage();
+        $sessions = $sessionRepository->findNextSessionSessionPage();
         return $this->render('session/futur.html.twig', [
             'sessions' => $sessions
         ]);
