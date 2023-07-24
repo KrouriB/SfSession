@@ -15,13 +15,14 @@
                 <th>Email</th>
                 <th>Téléphone</th>
                 <th>En session</th>
+                <th>Detail</th>
             </tr>
         </thead>
         <tbody>
             {% for stagiaire in stagiaires %}
                 <tr>
-                    <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">{{stagiaire.nom}}</a></th>
-                    <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">{{stagiaire.prenom}}</a></th>
+                    <th>{{stagiaire.nom}}</th>
+                    <th>{{stagiaire.prenom}}</th>
                     <th>{{stagiaire.sexe}}</th>
                     <th>{{stagiaire.dateNaissance|date('d/m/Y') }}</th>
                     <th>{{stagiaire.ville}}</th>
@@ -40,6 +41,7 @@
                             Non
                         {% endif %}
                     </th>
+                    <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">placeholder icone</a></th>
                 </tr>
             {% endfor %}
         </tbody>
