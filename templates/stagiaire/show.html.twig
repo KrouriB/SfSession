@@ -1,5 +1,50 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}{{ stagiaire }}{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <h1 class="permierStyle"><!-- icone ici -->Fiche stagiaire</h1>
+    <h2 class="secondStyle">{{ stagiaire }}</h2>
+    <div>
+        <span class="permierStyle">Sexe : {{ stagiaire.sexe }}</span>
+        {% set difference = date("now").diff(date(stagiaire.dateNaissance)) %}
+        {% set leftDays = difference.days %}
+        {% set leftYears = (leftDays / 365)|round(0, 'floor') %}
+        {% set leapYears = (leftYears / 4)|round(0, 'floor') %}
+        {% set trueLeftYears = (( leftDays + leapYears)/ 365)|round(0, 'floor') %}
+        <span class="permierStyle">Date de Naissance : {{ stagiaire.dateNaissance|date('d/m/Y') }} ({{ trueLeftYears }} ans)</span>
+        <span class="permierStyle">Ville : {{ stagiaire.ville }}</span>
+        <span class="permierStyle">Email : {{ stagiaire.email }}</span>
+        <span class="permierStyle">Téléphone : {{ stagiaire.telephone }}</span>
+    </div>
+
+    {% if stagiaire.sessions is not empty %}
+        <h2 class="secondStyle">Session passé</h2>
+        <ul>
+            {% for uneSession in stagiaire.sessions %}
+                {% if uneSession.dateFin < "now"|date %}
+                    <li class="permierStyle">{#{uneSession} toString a modifier si |date('d/m/Y') ne marche pas #}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <h2 class="secondStyle">Session en cours</h2>
+        <ul>
+            {% for uneSession in stagiaire.sessions %}
+                {% if uneSession.dateDebut <= "now"|date and uneSession.dateFin >= "now"|date %}
+                    <li class="permierStyle">{#{uneSession} toString a modifier si |date('d/m/Y') ne marche pas #}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+        <h2 class="secondStyle">Session prévues</h2>
+        <ul>
+            {% for uneSession in stagiaire.sessions %}
+                {% if uneSession.dateDebut > "now"|date %}
+                    <li class="permierStyle">{#{uneSession} toString a modifier si |date('d/m/Y') ne marche pas #}</li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <h2 class="secondStyle">Il n'as pas été asigner a une session</h2>
+    {% endif %}
+    
+{% endblock %}
