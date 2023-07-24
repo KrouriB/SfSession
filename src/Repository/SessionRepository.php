@@ -3,8 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Session;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Session>
@@ -26,10 +26,13 @@ class SessionRepository extends ServiceEntityRepository
 //     */
     public function findCurrentSessionHomePage(): array
     {
+        $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
-            ->andWhere('CURDATE() BETWEEN s.date_debut AND s.date_fin')
-            ->orderBy('s.date_fin', 'ASC')
+            ->andWhere(':today >= s.dateDebut')
+            ->andWhere(':today <= s.dateFin')
+            ->orderBy('s.dateFin', 'ASC')
             ->setMaxResults(2)
+            ->setParameter('today', $now)
             ->getQuery()
             ->getResult()
         ;
@@ -37,10 +40,12 @@ class SessionRepository extends ServiceEntityRepository
 
     public function findPastSessionHomePage(): array
     {
+        $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
-            ->andWhere('s.date_fin < CURDATE()')
-            ->orderBy('s.date_fin', 'ASC')
+            ->andWhere('s.dateFin < :today')
+            ->orderBy('s.dateFin', 'ASC')
             ->setMaxResults(2)
+            ->setParameter('today', $now)
             ->getQuery()
             ->getResult()
         ;
@@ -48,10 +53,12 @@ class SessionRepository extends ServiceEntityRepository
 
     public function findNextSessionHomePage(): array
     {
+        $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
-            ->andWhere('s.date_debut > CURDATE()')
-            ->orderBy('s.date_debut', 'ASC')
+            ->andWhere('s.dateDebut > :today')
+            ->orderBy('s.dateDebut', 'ASC')
             ->setMaxResults(2)
+            ->setParameter('today', $now)
             ->getQuery()
             ->getResult()
         ;
@@ -59,9 +66,12 @@ class SessionRepository extends ServiceEntityRepository
 
 public function findCurrentSessionSessionPage(): array
     {
+        $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
-            ->andWhere('CURDATE() BETWEEN s.date_debut AND s.date_fin')
-            ->orderBy('s.date_fin', 'ASC')
+            ->andWhere(':today >= s.dateDebut')
+            ->andWhere(':today <= s.dateFin')
+            ->orderBy('s.dateFin', 'ASC')
+            ->setParameter('today', $now)
             ->getQuery()
             ->getResult()
         ;
@@ -69,9 +79,11 @@ public function findCurrentSessionSessionPage(): array
 
     public function findPastSessionSessionPage(): array
     {
+        $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
-            ->andWhere('s.date_fin < CURDATE()')
-            ->orderBy('s.date_fin', 'ASC')
+            ->andWhere('s.dateFin < :today')
+            ->orderBy('s.dateFin', 'ASC')
+            ->setParameter('today', $now)
             ->getQuery()
             ->getResult()
         ;
@@ -79,9 +91,11 @@ public function findCurrentSessionSessionPage(): array
 
     public function findNextSessionSessionPage(): array
     {
+        $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
-            ->andWhere('s.date_debut > CURDATE()')
-            ->orderBy('s.date_debut', 'ASC')
+            ->andWhere('s.dateDebut > :today')
+            ->orderBy('s.dateDebut', 'ASC')
+            ->setParameter('today', $now)
             ->getQuery()
             ->getResult()
         ;
