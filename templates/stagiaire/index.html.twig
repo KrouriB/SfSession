@@ -20,16 +20,16 @@
         <tbody>
             {% for stagiaire in stagiaires %}
                 <tr>
-                    <th><a href="#">{{stagiaire.nom}}</a></th>
-                    <th><a href="#">{{stagiaire.prenom}}</a></th>
+                    <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">{{stagiaire.nom}}</a></th>
+                    <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">{{stagiaire.prenom}}</a></th>
                     <th>{{stagiaire.sexe}}</th>
-                    <th>{{stagiaire.dateNaissance}}</th>
+                    <th>{{stagiaire.dateNaissance|date('d/m/Y') }}</th>
                     <th>{{stagiaire.ville}}</th>
                     <th>{{stagiaire.email}}</th>
                     <th>{{stagiaire.telephone}}</th>
                     {% set enSession = false %}
-                    {% for aSession in stagiaire.sessions if not enSession %}
-                        {% if aSession.dateDebut <= "now"|date && aSession.dateFin >= "now"|date %} <!-- TODO: A tester  -->
+                    {% for aSession in stagiaire.sessions %}
+                        {% if aSession.dateDebut <= "now"|date and aSession.dateFin >= "now"|date %} <!-- TODO: A tester  -->
                             {% set enSession = true %}
                         {% endif %}
                     {% endfor %}
