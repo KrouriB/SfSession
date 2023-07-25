@@ -14,7 +14,7 @@ class ModuleController extends AbstractController
 {
     #[Route('/module', name: 'form_module')]
     #[Route('/module/{id}/edit', name: 'edit_module')]
-    public function index(Module $module = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function form(Module $module = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$module){
             $module = new Module();
@@ -33,7 +33,7 @@ class ModuleController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('module/index.html.twig', [
+        return $this->render('module/form.html.twig', [
             'module' => $form->createView(),
             'edit' => $module->getId()
         ]);

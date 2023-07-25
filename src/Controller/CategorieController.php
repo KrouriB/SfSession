@@ -14,7 +14,7 @@ class CategorieController extends AbstractController
 {
     #[Route('/categorie', name: 'form_categorie')]
     #[Route('/categorie/{id}/edit', name: 'edit_categorie')]
-    public function index(Categorie $categorie = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function form(Categorie $categorie = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$categorie){
             $categorie = new Categorie();
@@ -33,7 +33,7 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('categorie/index.html.twig', [
+        return $this->render('categorie/form.html.twig', [
             'categorie' => $form->createView(),
             'edit' => $categorie->getId()
         ]);

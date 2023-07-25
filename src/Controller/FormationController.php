@@ -14,7 +14,7 @@ class FormationController extends AbstractController
 {
     #[Route('/formation', name: 'form_formation')]
     #[Route('/formation/{id}/edit', name: 'edit_formation')]
-    public function index(Formation $formation = null, Request $request, EntityManagerInterface $entityManager): Response
+    public function form(Formation $formation = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$formation){
             $formation = new Formation();
@@ -33,7 +33,7 @@ class FormationController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('formation/index.html.twig', [
+        return $this->render('formation/form.html.twig', [
             'formation' => $form->createView(),
             'edit' => $formation->getId()
         ]);
