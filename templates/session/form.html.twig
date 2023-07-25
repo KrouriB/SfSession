@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une session</h1>
+
+    {{ form_errors(session) }}
+
+    {{ form_start(session) }}
+        {{ form_row(session.nom) }}
+        {{ form_row(session.dateDebut) }}
+        {{ form_row(session.dateFin) }}
+        {{ form_row(session.nombrePlaceTheorique) }}
+        {{ form_row(session.formation) }}
+        {{ form_row(session.valider) }}
+    {{ form_end(session) }}
+{% endblock %}

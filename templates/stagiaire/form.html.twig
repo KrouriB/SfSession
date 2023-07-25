@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{% endblock %}
+
+{% block body %}
+    <h1>Ajouter un stagiaire</h1>
+
+    {{ form_errors(stagiaire) }}
+
+    {{ form_start(stagiaire) }}
+        {{ form_row(stagiaire.nom) }}
+        {{ form_row(stagiaire.prenom) }}
+        {{ form_row(stagiaire.dateNaissance) }}
+        {{ form_row(stagiaire.email) }}
+        {{ form_row(stagiaire.telephone) }}
+        {{ form_row(stagiaire.sexe) }}
+        {{ form_row(stagiaire.ville) }}
+        {{ form_row(stagiaire.valider) }}
+    {{ form_end(stagiaire) }}
+{% endblock %}
