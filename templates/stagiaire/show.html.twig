@@ -4,7 +4,10 @@
 
 {% block body %}
     <h1 class="permierStyle"><!-- icone ici -->Fiche stagiaire</h1>
-    <h2 class="secondStyle">{{ stagiaire }}</h2>
+    <div>
+        <h2 class="secondStyle">{{ stagiaire }}</h2>
+        <a href="{{ path('edit_stagiaire',{'id': stagiaire.id})}}">Modifier</a>
+    </div>
     <div>
         <span class="permierStyle">Sexe : {{ stagiaire.sexe }}</span>
         {% set difference = date("now").diff(date(stagiaire.dateNaissance)) %}

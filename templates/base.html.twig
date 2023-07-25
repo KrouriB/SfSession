@@ -19,14 +19,14 @@
             <nav>
                 {% if app.user %}
                     <div>
-                        <a href="#">Acceuil</a>
+                        <a href="{{ path('app_home')}}">Acceuil</a>
                         <span>{# icon user #} {{ app.user.pseudo }}</span>
                     </div>
                     <div>
-                        <a href="#">En Cours</a>
-                        <a href="#">Passé</a>
-                        <a href="#">{{ 'à'|upper }} venir</a>
-                        <a href="#">Stagiaire</a>
+                        <a href="{{ path('now_session')}}">En Cours</a>
+                        <a href="{{ path('past_session')}}">Passé</a>
+                        <a href="{{ path('futur_session')}}">{{ 'à'|upper }} venir</a>
+                        <a href="{{ path('app_stagiaire')}}">Stagiaire</a>
                     </div>
                 {% endif %}
             </nav>
