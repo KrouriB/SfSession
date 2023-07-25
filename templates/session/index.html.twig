@@ -2,4 +2,116 @@
 
 {% block title %}{% endblock %}
 
-{% block body %}{% endblock %}
+{% block body %}
+    <h1>SESSION : {{ session.nom }} du {{ session.dateDebut|date('d/m/Y') }} au {{ session.dateFin|date('d/m/Y') }}</h1>
+    <div>
+        <h2>{{ session.formation }}</h2>
+        <h2>Place total : {{ session.placeTheorique }}</h2>
+        {% set reste = session.placeTheorique - session.stagiaires|length %}
+        {% if reste == 0 %}
+            <h2>{{'complète'|upper}}</h2>
+        {% else %}
+            <h2>Place restante : {{ reste }}</h2>
+        {% endif %}
+    </div>
+    <div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Nombre de Jours</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set titre1 = "" %} <!-- créer une variable ou stocker le futur nom de la categorie -->
+                    {% for row in array %}
+                        {% if titre == "" or titre !=  %} <!-- tester la variable si elle est vide ou si elle contient un nom de categorie different des precedent -->
+                            <tr>
+                                <th>{{}}</th>
+                            </tr>
+                            {% set titre1 = '' %} <!-- donner comme valeur a la variable le nom de la categorie -->
+                        {% endif %}
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th><a href="#">placeholder icone</a></th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Module</th>
+                        <th>Nombre de Jours</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set titre2 = "" %}
+                    {% for row in array %} <!-- boucle sur tout les modules -->
+                        {% set i = 0 %} <!-- variable test pour rentrer dans la condition -->
+                        {% for row in array %} <!-- boucle sur les modules de la session -->
+                            {% if '' != '' and i = 0%} <!-- condition si le module n'es pas en session et si une variable test n'es pas a la valeur voulu -->
+                                {% if titre == "" or titre !=  %}
+                                    <tr>
+                                        <th>{{}}</th>
+                                    </tr>
+                                    {% set titre2 =  %}
+                                {% endif %}
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th><a href="#">placeholder icone</a></th>
+                                </tr>
+                                {% set i = 1 %} <!-- changement de la valeur de la variable pour ne pas réaficher le module deja afficher  -->
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in array %}
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th><a href="#">placeholder icone</a></th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Prénom</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in array %}
+                        <form action="" method="POST">
+                            <tr>
+                                <th>{{}}</th>
+                                <th><input type="number" name="nbJours"></th>
+                                <th><button><input type="submit"> </button></th>
+                            </tr>
+                        </form>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
