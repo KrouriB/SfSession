@@ -102,6 +102,9 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/{id}/addModule', name: 'add_module')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[ParamConverter('session', class: 'SensioBlogBundle:Post')]
+    #[ParamConverter('module', class: 'SensioBlogBundle:Post')]
     public function addModule(Session $session, Module $module, int $nbJours, EntityManagerInterface $entityManager): Response
     {
         $programme = new Programme();
