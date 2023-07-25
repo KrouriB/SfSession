@@ -20,8 +20,7 @@ class Programme
     #[ORM\JoinColumn(nullable: false)]
     private ?Session $session = null;
 
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'programmes')]
     private ?Module $module = null;
 
     public function getId(): ?int
@@ -64,4 +63,5 @@ class Programme
 
         return $this;
     }
+
 }
