@@ -36,9 +36,9 @@
                     {% endfor %}
                     <th>
                         {% if enSession == true %}
-                            Oui
+                            <span>Oui</span>
                         {% else %}
-                            Non
+                            <span>Non</span>
                         {% endif %}
                     </th>
                     <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">placeholder icone</a></th>
