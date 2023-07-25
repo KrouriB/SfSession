@@ -57,14 +57,6 @@ class SessionController extends AbstractController
             'sessions' => $sessions
         ]);
     }
-
-    #[Route('/session'/*/{id}'*/, name: 'app_session')]
-    public function index(/*Session $session*/): Response
-    {
-        return $this->render('session/index.html.twig', [
-            /*formuaire programme + ajout stagiaire*/
-        ]);
-    }
     
     #[Route('/session/past', name: 'past_session')]
     public function past(SessionRepository $sessionRepository): Response
@@ -72,6 +64,14 @@ class SessionController extends AbstractController
         $sessions = $sessionRepository->findPastSessionSessionPage();
         return $this->render('session/past.html.twig', [
             'sessions' => $sessions
+        ]);
+    }
+
+    #[Route('/session'/*/{id}'*/, name: 'app_session')]
+    public function index(/*Session $session*/): Response
+    {
+        return $this->render('session/index.html.twig', [
+            /*formuaire programme + ajout stagiaire*/
         ]);
     }
 }
