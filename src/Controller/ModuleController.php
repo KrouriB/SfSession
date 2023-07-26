@@ -14,6 +14,7 @@ class ModuleController extends AbstractController
 {
     #[Route('/module', name: 'form_module')]
     #[Route('/module/{id}/edit', name: 'edit_module')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function form(Module $module = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$module){

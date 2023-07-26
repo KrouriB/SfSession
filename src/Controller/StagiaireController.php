@@ -15,6 +15,7 @@ class StagiaireController extends AbstractController
 {
     #[Route('/stagiaire/new', name: 'form_stagiaire')]
     #[Route('/stagiaire/{id}/edit', name: 'edit_stagiaire')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function new(Stagiaire $stagiaire = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$stagiaire){
@@ -42,6 +43,7 @@ class StagiaireController extends AbstractController
 
 
     #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function show(Stagiaire $stagiaire): Response
     {
         return $this->render('stagiaire/show.html.twig', [
@@ -54,6 +56,7 @@ class StagiaireController extends AbstractController
 
     
     #[Route('/stagiaire', name: 'app_stagiaire')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function index(StagiaireRepository $stagiaireRepository): Response
     {
         $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);

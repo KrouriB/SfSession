@@ -14,6 +14,7 @@ class FormationController extends AbstractController
 {
     #[Route('/formation', name: 'form_formation')]
     #[Route('/formation/{id}/edit', name: 'edit_formation')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function form(Formation $formation = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$formation){

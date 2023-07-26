@@ -22,6 +22,7 @@ class SessionController extends AbstractController
 {
     #[Route('/session/new', name: 'form_session')]
     #[Route('/session/{id}/edit', name: 'edit_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function new(Session $session = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$session){
@@ -48,6 +49,7 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/now', name: 'now_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function now(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findCurrentSessionSessionPage();
@@ -57,6 +59,7 @@ class SessionController extends AbstractController
     }
     
     #[Route('/session/futur', name: 'futur_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function futur(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findNextSessionSessionPage();
@@ -66,6 +69,7 @@ class SessionController extends AbstractController
     }
     
     #[Route('/session/past', name: 'past_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function past(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findPastSessionSessionPage();
@@ -75,6 +79,7 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/{id}', name: 'app_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
     public function index(Session $session, StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, int $id): Response
     {

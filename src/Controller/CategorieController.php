@@ -14,6 +14,7 @@ class CategorieController extends AbstractController
 {
     #[Route('/categorie', name: 'form_categorie')]
     #[Route('/categorie/{id}/edit', name: 'edit_categorie')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function form(Categorie $categorie = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         if(!$categorie){
