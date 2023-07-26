@@ -122,11 +122,10 @@ class SessionController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
     #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
-    #[ParamConverter('programme', options: ['mapping' => ['nbJours' => 'nombreJours']])]
-    public function addModule(Session $session, Module $module, int $nbJours, EntityManagerInterface $entityManager): Response
+    public function addModule(Session $session, Module $module, Request $request, EntityManagerInterface $entityManager): Response
     {
         $programme = new Programme();
-        $programme->setNombreJours($nbJours);
+        $programme->setNombreJours($request->request->get('nbJours'));
 
         $module->addProgramme($programme);
 
