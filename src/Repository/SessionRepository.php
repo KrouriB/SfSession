@@ -100,4 +100,48 @@ public function findCurrentSessionSessionPage(): array
             ->getResult()
         ;
     }
+
+    public function findStagiaireNotInSession($session_id): array
+    {
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        $qb->select('s')
+            ->from('App\Entity\Stagiaire', 's')
+            ->leftJoin('s.sessions', 'se')
+            ->andWhere('se.id = :id');
+        
+        $sub = $em->createQueryBuilder();
+        $sub->select('st')
+            ->from('App\Entity\Stagiaire', 'st')
+            ->andWhere($sub->expr()->notIn('st.id', $qb->getDQL()))
+            ->setParameter('id', $session_id)
+            ->orderBy('st.nom');
+        
+        $query = $sub->getQuery();
+        return $query->getResult();
+    }
+
+    public function findModuleNotInSession($session_id): array
+    {
+        $em = $this->getEntityManager();
+        $sub = $em->createQueryBuilder();
+
+        $qb = $sub;
+        $qb->select('p')
+            ->from('App\Entity\Programme', 'p')
+            ->leftJoin('p.session', 's')
+            ->andWhere('s.id = :id');
+        
+        $sub = $em->createQueryBuilder();
+        $sub->select('m')
+            ->from('App\Entity\Module', 'm')
+            ->andWhere($sub->expr()->notIn('m.id', $qb->getDQL()))
+            ->setParameter('id', $session_id)
+            ->orderBy('m.categorie');
+        
+        $query = $sub->getQuery();
+        return $query->getResult();
+    }
 }
