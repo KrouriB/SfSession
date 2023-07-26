@@ -23,7 +23,7 @@
                     <th>{{session.dateFin|date('d/m/Y')}}</th>
                     <th>{{session.nombrePlaceTheorique}}</th>
                     <th>{{session.stagiaires|length}}</th>
-                    <th><a href="#">placeholder icone</a></th>
+                    <th><a href="{{ path('app_session', {'id': session.id})}}">placeholder icone</a></th>
                 </tr>
             {% endfor %}
         </tbody>
