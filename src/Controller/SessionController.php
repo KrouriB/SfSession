@@ -2,15 +2,21 @@
 
 namespace App\Controller;
 
+use App\Entity\Module;
 use App\Entity\Session;
+use App\Entity\Programme;
 use App\Entity\Stagiaire;
 use App\Form\SessionType;
+use App\Repository\ModuleRepository;
 use App\Repository\SessionRepository;
+use App\Repository\StagiaireRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class SessionController extends AbstractController
 {
@@ -69,18 +75,26 @@ class SessionController extends AbstractController
     }
 
     #[Route('/session/{id}', name: 'app_session')]
-    public function index(Session $session): Response
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    public function index(Session $session, StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, int $id): Response
     {
         $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
         $modules = $moduleRepository->findBy([],['nom' => 'ASC']);
+        $notInStagiaire = $sessionRepository->findStagiaireNotInSession($id);
+        $notInModule = $sessionRepository->findModuleNotInSession($id);
         return $this->render('session/index.html.twig', [
             'session' => $session,
             'stagiaires' => $stagiaires,
+            'notInStagiaire' => $notInStagiaire,
+            'notInModule' => $notInModule,
             'modules' => $modules
         ]);
     }
 
-    #[Route('/session/{id}/addStagiaire', name: 'add_stagiaire')]
+    #[Route('/session/{id}/addStagiaire/{id_stagiaire}', name: 'add_stagiaire')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
     public function addStagiaire(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
     {
         $session->addStagiaire($stagiaire);
@@ -91,7 +105,10 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}/deleteStagiaire', name: 'delete_stagiaire')]
+    #[Route('/session/{id}/deleteStagiaire/{id_stagiaire}', name: 'delete_stagiaire')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
     public function deleteStagiaire(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
     {
         $session->removeStagiaire($stagiaire);
@@ -101,10 +118,11 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}/addModule', name: 'add_module')]
+    #[Route('/session/{id}/addModule/{id_module}', name: 'add_module')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('session', class: 'SensioBlogBundle:Post')]
-    #[ParamConverter('module', class: 'SensioBlogBundle:Post')]
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
+    #[ParamConverter('programme', options: ['mapping' => ['nbJours' => 'nombreJours']])]
     public function addModule(Session $session, Module $module, int $nbJours, EntityManagerInterface $entityManager): Response
     {
         $programme = new Programme();
@@ -120,7 +138,10 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}/deleteModule', name: 'delete_module')]
+    #[Route('/session/{id}/deleteModule/{id_module}', name: 'delete_module')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
     public function deleteModule(Session $session, Programme $programme, EntityManagerInterface $entityManager): Response
     {
         $programme-getModule()->removeProgramme($programme);
