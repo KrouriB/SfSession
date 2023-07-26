@@ -5,7 +5,7 @@
 {% block body %}
     <h1>SESSION : {{ session.nom }} du {{ session.dateDebut|date('d/m/Y') }} au {{ session.dateFin|date('d/m/Y') }}</h1>
     <div>
-        <h2>{{ session.formation.nom }}</h2>
+        <h2>{{ session.formation.nom }} <a href="{{ path('edit_formation',{'id': session.formation.id})}}">edit</a></h2>
         <h2>Place total : {{ session.nombrePlaceTheorique }}</h2>
         {% set reste = session.nombrePlaceTheorique - session.stagiaires|length %}
         {% if reste == 0 %}
@@ -31,12 +31,12 @@
                             {% set module = programme.module %}
                             {% if titre1 == "" or titre1 != module.categorie.nom %} <!-- tester la variable si elle est vide ou si elle contient un nom de categorie different des precedent -->
                                 <tr>
-                                    <th>{{module.categorie.nom}}</th>
+                                    <th>{{module.categorie.nom}} <a href="{{ path('edit_categorie',{'id': module.categorie.id})}}">edit</a></th>
                                 </tr>
                                 {% set titre1 = module.categorie.nom %} <!-- donner comme valeur a la variable le nom de la categorie -->
                             {% endif %}
                             <tr>
-                                <th>{{module.nom}}</th>
+                                <th>{{module.nom}} <a href="{{ path('edit_module',{'id': module.id})}}">edit</a></th>
                                 <th>{{programme.nombreJours}}</th>
                                 <th><a href="{{ path('delete_module',{'id': session.id, 'id_module': module.id})}}">placeholder icone</a></th>
                             </tr>
@@ -61,13 +61,13 @@
                     {% for module in notInModule %} <!-- boucle sur tout les modules -->
                         {% if titre2 == "" or titre2 != module.categorie.nom %}
                             <tr>
-                                <th>{{module.categorie.nom}}</th>
+                                <th>{{module.categorie.nom}} <a href="{{ path('edit_categorie',{'id': module.categorie.id})}}">edit</a></th>
                             </tr>
                             {% set titre2 = module.categorie.nom %}
                         {% endif %}
                         <form action="{{ path('add_module',{'id': session.id, 'id_module': module.id})}}" method="POST">
                             <tr>
-                                <th>{{module.nom}}</th>
+                                <th>{{module.nom}} <a href="{{ path('edit_module',{'id': module.id})}}">edit</a></th>
                                 <th><input type="number" name="nbJours" id="nbJours"></th>
                                 <th><input type="submit" value="placeholder icone 2"></th>
                             </tr>
