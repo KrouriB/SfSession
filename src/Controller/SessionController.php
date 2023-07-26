@@ -125,7 +125,7 @@ class SessionController extends AbstractController
     public function addModule(Session $session, Module $module, Request $request, EntityManagerInterface $entityManager): Response
     {
         $programme = new Programme();
-        $programme->setNombreJours($request->request->get('nbJours'));
+        $programme->setNombreJours($request->request->get('nbJours')); //utilisation de la varaible requete ou on peut obtenir le nombre de jours recuperer depuis le form
 
         $module->addProgramme($programme);
 
