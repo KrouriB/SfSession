@@ -46,8 +46,10 @@ class StagiaireController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function show(Stagiaire $stagiaire): Response
     {
+        $today = date('Y-m-d');
         return $this->render('stagiaire/show.html.twig', [
-            'stagiaire' => $stagiaire
+            'stagiaire' => $stagiaire,
+            'today' => $today
         ]);
     }
 
@@ -59,9 +61,11 @@ class StagiaireController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function index(StagiaireRepository $stagiaireRepository): Response
     {
+        $today = date('Y-m-d');
         $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
         return $this->render('stagiaire/index.html.twig', [
-            'stagiaires' => $stagiaires
+            'stagiaires' => $stagiaires,
+            'today' => $today
         ]);
     }
 }
