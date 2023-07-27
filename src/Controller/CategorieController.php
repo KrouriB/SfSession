@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CategorieController extends AbstractController
 {
-    #[Route('/categorie', name: 'form_categorie')]
+    #[Route('/categorie', name: 'add_categorie')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {

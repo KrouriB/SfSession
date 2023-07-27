@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ModuleController extends AbstractController
 {
-    #[Route('/module', name: 'form_module')]
+    #[Route('/module', name: 'add_module')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
