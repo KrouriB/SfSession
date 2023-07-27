@@ -4,19 +4,20 @@
 
 {% block body %}
     <h1>SESSION : {{ session.nom }} du {{ session.dateDebut|date('d/m/Y') }} au {{ session.dateFin|date('d/m/Y') }} <a href="{{ path('edit_session',{'id': session.id})}}">edit</a></h1>
-    <div>
-        <h2>{{ session.formation.nom }} <a href="{{ path('edit_formation',{'id': session.formation.id})}}">edit</a></h2>
-        <h2>Place total : {{ session.nombrePlaceTheorique }}</h2>
+    <div class="row">
+        <div class="col"><h2>Formation : {{ session.formation.nom }} <a href="{{ path('edit_formation',{'id': session.formation.id})}}">edit</a></h2></div>
+        <div class="col"><h2>Place total : {{ session.nombrePlaceTheorique }}</h2></div>
         {% set reste = session.nombrePlaceTheorique - session.stagiaires|length %}
         {% if reste == 0 %}
-            <h2>{{'complète'|upper}}</h2>
+            <div class="col-1 badge bg-danger bg-lg d-flex align-items-center justify-content-center"><span>{{'complète'|upper}}</span></div>
         {% else %}
-            <h2>Place restante : {{ reste }}</h2>
+            <div class="col"><h2>Place restante : {{ reste }}</h2></div>
         {% endif %}
+        <div class="col"></div>
     </div>
     <div>
-        <div>
-            <table>
+        <div class="row">
+            <table class="col table">
                 <thead>
                     <tr>
                         <th>Module</th>
@@ -38,7 +39,7 @@
                             <tr>
                                 <th>{{module.nom}} <a href="{{ path('edit_module',{'id': module.id})}}">edit</a></th>
                                 <th>{{programme.nombreJours}}</th>
-                                <th><a href="{{ path('delete_module',{'id_session': session.id, 'id_programme': programme.id, 'id_module': module.id})}}">placeholder icone</a></th>
+                                <th><a href="{{ path('delete_module_session',{'id_session': session.id, 'id_programme': programme.id, 'id_module': module.id})}}" class="btn btn-danger"><i class="fa-solid fa-minus"></i></a></th>
                             </tr>
                         {% endfor %}
                     {% else %}
@@ -48,7 +49,7 @@
                     {% endif %}
                 </tbody>
             </table>
-            <table>
+            <table class="col table">
                 <thead>
                     <tr>
                         <th>Module</th>
@@ -65,20 +66,22 @@
                             </tr>
                             {% set titre2 = module.categorie.nom %}
                         {% endif %}
-                        <form action="{{ path('add_module',{'id_session': session.id, 'id_module': module.id})}}" method="POST">
+                        <form action="{{ path('add_module_session',{'id_session': session.id, 'id_module': module.id})}}" method="POST">
                             <tr>
                                 <th>{{module.nom}} <a href="{{ path('edit_module',{'id': module.id})}}">edit</a></th>
                                 <th><input type="number" name="nbJours" id="nbJours"></th>
-                                <th><input type="submit" value="placeholder icone 2"></th>
+                                <th><button type="submit" class="btn btn-success"><i class="fa-solid fa-plus"></i></button></th>
                             </tr>
                         </form>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
-        <a href="{{ path('add_module')}}"></a>
-        <div>
-            <table>
+        <div class="row">
+            <a href="{{ path('add_module')}}" class="col text-center">Ajouter un nouveau module</a>
+        </div>
+        <div class="row">
+            <table class="col table">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -92,7 +95,7 @@
                             <tr>
                                 <th>{{stagiaire.nom}}</th>
                                 <th>{{stagiaire.prenom}}</th>
-                                <th><a href="{{ path('delete_stagiaire',{'id_session': session.id, 'id_stagiaire': stagiaire.id})}}">placeholder icone</a></th>
+                                <th><a href="{{ path('delete_stagiaire_session',{'id_session': session.id, 'id_stagiaire': stagiaire.id})}}" class="text-danger"><i class="fa-solid fa-user-minus"></i></a></th>
                             </tr>
                         {% endfor %}
                     {% else %}
@@ -102,7 +105,7 @@
                     {% endif %}
                 </tbody>
             </table>
-            <table>
+            <table class="col table">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -118,7 +121,7 @@
                             {% if reste == 0 %}
                                 <th><span> </span></th>
                             {% else %}
-                                <th><a href="{{ path('add_stagiaire',{'id_session': session.id, 'id_stagiaire': stagiaire.id})}}">placeholder icone 2</a></th>
+                                <th><a href="{{ path('add_stagiaire_session',{'id_session': session.id, 'id_stagiaire': stagiaire.id})}}" class="text-success"><i class="fa-solid fa-user-plus"></i></a></th>
                             {% endif %}
                         </tr>
                     {% endfor %}
