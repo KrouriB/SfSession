@@ -25,24 +25,24 @@
         <h2 class="secondStyle">Session passé</h2>
         <ul>
             {% for uneSession in stagiaire.sessions %}
-                {% if uneSession.dateFin < "now"|date %}
-                    <li class="permierStyle">{#{uneSession} toString a modifier si |date('d/m/Y') ne marche pas #}</li>
+                {% if (today|date('Y') > uneSession.dateFin|date('Y')) or ((today|date('Y') == uneSession.dateFin|date('Y')) and (today|date('m') > uneSession.dateFin|date('m'))) or ((today|date('Y') == uneSession.dateFin|date('Y')) and (today|date('m') == uneSession.dateFin|date('m')) and (today|date('d') > uneSession.dateFin|date('d'))) %} <!-- obliger de faire le test des date comme ça car la comparaison de date de twig n'est pas fonctionelle -->
+                    <li class="permierStyle">{{[uneSession, "( du", uneSession.dateDebut|date("d/m/Y"), "au", uneSession.dateFin|date("d/m/Y"),")"]|join(' ')}}</li>
                 {% endif %}
             {% endfor %}
         </ul>
         <h2 class="secondStyle">Session en cours</h2>
         <ul>
             {% for uneSession in stagiaire.sessions %}
-                {% if uneSession.dateDebut <= "now"|date and uneSession.dateFin >= "now"|date %}
-                    <li class="permierStyle">{#{uneSession} toString a modifier si |date('d/m/Y') ne marche pas #}</li>
+                {% if ( (today|date('Y') > uneSession.dateDebut|date('Y')) or ((today|date('Y') == uneSession.dateDebut|date('Y')) and (today|date('m') > uneSession.dateDebut|date('m'))) or ((today|date('Y') == uneSession.dateDebut|date('Y')) and (today|date('m') == uneSession.dateDebut|date('m')) and (today|date('d') >= uneSession.dateDebut|date('d'))) and (today|date('Y') < uneSession.dateFin|date('Y')) or ((today|date('Y') == uneSession.dateFin|date('Y')) and (today|date('m') < uneSession.dateFin|date('m'))) or ((today|date('Y') == uneSession.dateFin|date('Y')) and (today|date('m') == uneSession.dateFin|date('m')) and (today|date('d') <= uneSession.dateFin|date('d'))) ) %}
+                    <li class="permierStyle">{{[uneSession, "( du", uneSession.dateDebut|date("d/m/Y"), "au", uneSession.dateFin|date("d/m/Y"),")"]|join(' ')}}</li>
                 {% endif %}
             {% endfor %}
         </ul>
         <h2 class="secondStyle">Session prévues</h2>
         <ul>
             {% for uneSession in stagiaire.sessions %}
-                {% if uneSession.dateDebut > "now"|date %}
-                    <li class="permierStyle">{#{uneSession} toString a modifier si |date('d/m/Y') ne marche pas #}</li>
+                {% if (today|date('Y') < uneSession.dateDebut|date('Y')) or ((today|date('Y') == uneSession.dateDebut|date('Y')) and (today|date('m') < uneSession.dateDebut|date('m'))) or ((today|date('Y') == uneSession.dateDebut|date('Y')) and (today|date('m') == uneSession.dateDebut|date('m')) and (today|date('d') < uneSession.dateDebut|date('d'))) %}
+                    <li class="permierStyle">{{[uneSession, "( du", uneSession.dateDebut|date("d/m/Y"), "au", uneSession.dateFin|date("d/m/Y"),")"]|join(' ')}}</li>
                 {% endif %}
             {% endfor %}
         </ul>
