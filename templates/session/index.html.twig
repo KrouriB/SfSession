@@ -3,7 +3,7 @@
 {% block title %}{% endblock %}
 
 {% block body %}
-    <h1>SESSION : {{ session.nom }} du {{ session.dateDebut|date('d/m/Y') }} au {{ session.dateFin|date('d/m/Y') }}</h1>
+    <h1>SESSION : {{ session.nom }} du {{ session.dateDebut|date('d/m/Y') }} au {{ session.dateFin|date('d/m/Y') }} <a href="{{ path('edit_session',{'id': session.id})}}">edit</a></h1>
     <div>
         <h2>{{ session.formation.nom }} <a href="{{ path('edit_formation',{'id': session.formation.id})}}">edit</a></h2>
         <h2>Place total : {{ session.nombrePlaceTheorique }}</h2>
