@@ -107,34 +107,7 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/{id}', name: 'app_session')]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
-    public function index(StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, Request $request, EntityManagerInterface $entityManager): Response
-    {
-
-        $sessionId = $request->get('id');
-
-        $session = $entityManager->getRepository(Session::class)->find($sessionId);
-
-        if (!$session) {
-            throw $this->createNotFoundException();
-        }
-
-        $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
-        $modules = $moduleRepository->findBy([],['nom' => 'ASC']);
-        $notInStagiaire = $sessionRepository->findStagiaireNotInSession($sessionId);
-        $notInModule = $sessionRepository->findModuleNotInSession($sessionId);
-        return $this->render('session/index.html.twig', [
-            'session' => $session,
-            'stagiaires' => $stagiaires,
-            'notInStagiaire' => $notInStagiaire,
-            'notInModule' => $notInModule,
-            'modules' => $modules
-        ]);
-    }
-
-    #[Route('/session/{id_session}/addStagiaire/{id_stagiaire}', name: 'add_stagiaire')]
+    #[Route('/session/{id_session}/addStagiaire/{id_stagiaire}', name: 'add_stagiaire_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
@@ -165,7 +138,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id_session}/deleteStagiaire/{id_stagiaire}', name: 'delete_stagiaire')]
+    #[Route('/session/{id_session}/deleteStagiaire/{id_stagiaire}', name: 'delete_stagiaire_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
@@ -194,7 +167,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id_session}/addModule/{id_module}', name: 'add_module')]
+    #[Route('/session/{id_session}/addModule/{id_module}', name: 'add_module_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
     #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
@@ -229,7 +202,7 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id_session}/deleteModule/{id_programme}/{id_module}', name: 'delete_module')]
+    #[Route('/session/{id_session}/deleteModule/{id_programme}/{id_module}', name: 'delete_module_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
@@ -268,5 +241,32 @@ class SessionController extends AbstractController
         $entityManager->flush();
         
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
+    }
+
+    #[Route('/session/{id}', name: 'app_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    public function index(StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, Request $request, EntityManagerInterface $entityManager): Response
+    {
+
+        $sessionId = $request->get('id');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+
+        $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
+        $modules = $moduleRepository->findBy([],['nom' => 'ASC']);
+        $notInStagiaire = $sessionRepository->findStagiaireNotInSession($sessionId);
+        $notInModule = $sessionRepository->findModuleNotInSession($sessionId);
+        return $this->render('session/index.html.twig', [
+            'session' => $session,
+            'stagiaires' => $stagiaires,
+            'notInStagiaire' => $notInStagiaire,
+            'notInModule' => $notInModule,
+            'modules' => $modules
+        ]);
     }
 }
