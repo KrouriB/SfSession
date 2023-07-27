@@ -129,17 +129,17 @@ public function findCurrentSessionSessionPage(): array
         $sub = $em->createQueryBuilder();
 
         $qb = $sub;
-        $qb->select('p')
+        $qb->select('m')
             ->from('App\Entity\Programme', 'p')
-            ->leftJoin('p.session', 's')
-            ->andWhere('s.id = :id');
+            ->leftJoin('p.module', 'm')
+            ->andWhere('p.session = :id');
         
         $sub = $em->createQueryBuilder();
-        $sub->select('m')
-            ->from('App\Entity\Module', 'm')
-            ->andWhere($sub->expr()->notIn('m.id', $qb->getDQL()))
+        $sub->select('mo')
+            ->from('App\Entity\Module', 'mo')
+            ->andWhere($sub->expr()->notIn('mo.id', $qb->getDQL()))
             ->setParameter('id', $session_id)
-            ->orderBy('m.categorie');
+            ->orderBy('mo.categorie');
         
         $query = $sub->getQuery();
         return $query->getResult();
