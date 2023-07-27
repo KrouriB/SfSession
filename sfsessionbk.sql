@@ -14,15 +14,17 @@
 
 
 -- Listage de la structure de la base pour sfsessionbk
-CREATE DATABASE IF NOT EXISTS `sfsessionbk` /*!40100 DEFAULT CHARACTER SET latin1 */;
+DROP DATABASE IF EXISTS `sfsessionbk`;
+CREATE DATABASE IF NOT EXISTS `sfsessionbk` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `sfsessionbk`;
 
 -- Listage de la structure de la table sfsessionbk. categorie
+DROP TABLE IF EXISTS `categorie`;
 CREATE TABLE IF NOT EXISTS `categorie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.categorie : ~5 rows (environ)
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
@@ -35,12 +37,13 @@ INSERT INTO `categorie` (`id`, `nom`) VALUES
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. doctrine_migration_versions
+DROP TABLE IF EXISTS `doctrine_migration_versions`;
 CREATE TABLE IF NOT EXISTS `doctrine_migration_versions` (
   `version` varchar(191) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `executed_at` datetime DEFAULT NULL,
   `execution_time` int(11) DEFAULT NULL,
   PRIMARY KEY (`version`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.doctrine_migration_versions : ~1 rows (environ)
 /*!40000 ALTER TABLE `doctrine_migration_versions` DISABLE KEYS */;
@@ -49,11 +52,12 @@ INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_
 /*!40000 ALTER TABLE `doctrine_migration_versions` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. formation
+DROP TABLE IF EXISTS `formation`;
 CREATE TABLE IF NOT EXISTS `formation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.formation : ~4 rows (environ)
 /*!40000 ALTER TABLE `formation` DISABLE KEYS */;
@@ -65,6 +69,7 @@ INSERT INTO `formation` (`id`, `nom`) VALUES
 /*!40000 ALTER TABLE `formation` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. messenger_messages
+DROP TABLE IF EXISTS `messenger_messages`;
 CREATE TABLE IF NOT EXISTS `messenger_messages` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `body` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -77,13 +82,14 @@ CREATE TABLE IF NOT EXISTS `messenger_messages` (
   KEY `IDX_75EA56E0FB7336F0` (`queue_name`),
   KEY `IDX_75EA56E0E3BD61CE` (`available_at`),
   KEY `IDX_75EA56E016BA31DB` (`delivered_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.messenger_messages : ~0 rows (environ)
 /*!40000 ALTER TABLE `messenger_messages` DISABLE KEYS */;
 /*!40000 ALTER TABLE `messenger_messages` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. module
+DROP TABLE IF EXISTS `module`;
 CREATE TABLE IF NOT EXISTS `module` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `categorie_id` int(11) NOT NULL,
@@ -91,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `module` (
   PRIMARY KEY (`id`),
   KEY `IDX_C242628BCF5E72D` (`categorie_id`),
   CONSTRAINT `FK_C242628BCF5E72D` FOREIGN KEY (`categorie_id`) REFERENCES `categorie` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.module : ~7 rows (environ)
 /*!40000 ALTER TABLE `module` DISABLE KEYS */;
@@ -106,6 +112,7 @@ INSERT INTO `module` (`id`, `categorie_id`, `nom`) VALUES
 /*!40000 ALTER TABLE `module` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. programme
+DROP TABLE IF EXISTS `programme`;
 CREATE TABLE IF NOT EXISTS `programme` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `session_id` int(11) NOT NULL,
@@ -116,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `programme` (
   KEY `IDX_3DDCB9FFAFC2B591` (`module_id`),
   CONSTRAINT `FK_3DDCB9FF613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`),
   CONSTRAINT `FK_3DDCB9FFAFC2B591` FOREIGN KEY (`module_id`) REFERENCES `module` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.programme : ~2 rows (environ)
 /*!40000 ALTER TABLE `programme` DISABLE KEYS */;
@@ -128,6 +135,7 @@ INSERT INTO `programme` (`id`, `session_id`, `module_id`, `nombre_jours`) VALUES
 /*!40000 ALTER TABLE `programme` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. session
+DROP TABLE IF EXISTS `session`;
 CREATE TABLE IF NOT EXISTS `session` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `formation_id` int(11) NOT NULL,
@@ -138,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `session` (
   PRIMARY KEY (`id`),
   KEY `IDX_D044D5D45200282E` (`formation_id`),
   CONSTRAINT `FK_D044D5D45200282E` FOREIGN KEY (`formation_id`) REFERENCES `formation` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.session : ~6 rows (environ)
 /*!40000 ALTER TABLE `session` DISABLE KEYS */;
@@ -152,6 +160,7 @@ INSERT INTO `session` (`id`, `formation_id`, `nom`, `date_debut`, `date_fin`, `n
 /*!40000 ALTER TABLE `session` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. stagiaire
+DROP TABLE IF EXISTS `stagiaire`;
 CREATE TABLE IF NOT EXISTS `stagiaire` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -162,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `stagiaire` (
   `sexe` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `ville` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.stagiaire : ~9 rows (environ)
 /*!40000 ALTER TABLE `stagiaire` DISABLE KEYS */;
@@ -179,6 +188,7 @@ INSERT INTO `stagiaire` (`id`, `nom`, `prenom`, `date_naissance`, `email`, `tele
 /*!40000 ALTER TABLE `stagiaire` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. stagiaire_session
+DROP TABLE IF EXISTS `stagiaire_session`;
 CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   `stagiaire_id` int(11) NOT NULL,
   `session_id` int(11) NOT NULL,
@@ -187,7 +197,7 @@ CREATE TABLE IF NOT EXISTS `stagiaire_session` (
   KEY `IDX_D32D02D4613FECDF` (`session_id`),
   CONSTRAINT `FK_D32D02D4613FECDF` FOREIGN KEY (`session_id`) REFERENCES `session` (`id`) ON DELETE CASCADE,
   CONSTRAINT `FK_D32D02D4BBA93DD6` FOREIGN KEY (`stagiaire_id`) REFERENCES `stagiaire` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.stagiaire_session : ~3 rows (environ)
 /*!40000 ALTER TABLE `stagiaire_session` DISABLE KEYS */;
@@ -199,6 +209,7 @@ INSERT INTO `stagiaire_session` (`stagiaire_id`, `session_id`) VALUES
 /*!40000 ALTER TABLE `stagiaire_session` ENABLE KEYS */;
 
 -- Listage de la structure de la table sfsessionbk. user
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(180) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -208,7 +219,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `is_verified` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_8D93D649E7927C74` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 -- Listage des données de la table sfsessionbk.user : ~4 rows (environ)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
