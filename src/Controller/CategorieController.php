@@ -13,12 +13,41 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategorieController extends AbstractController
 {
     #[Route('/categorie', name: 'form_categorie')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $categorie = new Categorie();
+
+        $form = $this->createForm(CategorieType::class, $categorie);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $categorie = $form->getData();
+            $entityManager->persist($categorie);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('categorie/form.html.twig', [
+            'categorie' => $form->createView(),
+            'edit' => $categorie->getId()
+        ]);
+    }
+
     #[Route('/categorie/{id}/edit', name: 'edit_categorie')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function form(Categorie $categorie = null, Request $request, EntityManagerInterface $entityManager): Response
+    #[ParamConverter('categorie', options: ['mapping' => ['id' => 'id']])]
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
-        if(!$categorie){
-            $categorie = new Categorie();
+        $categorieId = $request->get('id');
+
+        $categorie = $entityManager->getRepository(Categorie::class)->find($categorieId);
+
+        if (!$categorie) {
+            throw $this->createNotFoundException();
         }
 
         $form = $this->createForm(CategorieType::class, $categorie);

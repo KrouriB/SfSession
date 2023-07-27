@@ -81,12 +81,21 @@ class SessionController extends AbstractController
     #[Route('/session/{id}', name: 'app_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
-    public function index(Session $session, StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, int $id): Response
+    public function index(StagiaireRepository $stagiaireRepository, ModuleRepository $moduleRepository, SessionRepository $sessionRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
+
+        $sessionId = $request->get('id');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+
         $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
         $modules = $moduleRepository->findBy([],['nom' => 'ASC']);
-        $notInStagiaire = $sessionRepository->findStagiaireNotInSession($id);
-        $notInModule = $sessionRepository->findModuleNotInSession($id);
+        $notInStagiaire = $sessionRepository->findStagiaireNotInSession($sessionId);
+        $notInModule = $sessionRepository->findModuleNotInSession($sessionId);
         return $this->render('session/index.html.twig', [
             'session' => $session,
             'stagiaires' => $stagiaires,
@@ -96,12 +105,29 @@ class SessionController extends AbstractController
         ]);
     }
 
-    #[Route('/session/{id}/addStagiaire/{id_stagiaire}', name: 'add_stagiaire')]
+    #[Route('/session/{id_session}/addStagiaire/{id_stagiaire}', name: 'add_stagiaire')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
-    public function addStagiaire(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
+    public function addStagiaire(Request $request, Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
     {
+        $sessionId = $request->get('id_session');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+        
+        $stagiaireId = $request->get('id_stagiaire');
+
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
+
+        if (!$stagiaire) {
+            throw $this->createNotFoundException();
+        }
+
+
         $session->addStagiaire($stagiaire);
 
         $entityManager->persist($stagiaire);
@@ -110,12 +136,28 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}/deleteStagiaire/{id_stagiaire}', name: 'delete_stagiaire')]
+    #[Route('/session/{id_session}/deleteStagiaire/{id_stagiaire}', name: 'delete_stagiaire')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
-    public function deleteStagiaire(Session $session, Stagiaire $stagiaire, EntityManagerInterface $entityManager): Response
+    public function deleteStagiaire(Request $request,  EntityManagerInterface $entityManager): Response
     {
+        $sessionId = $request->get('id_session');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+        
+        $stagiaireId = $request->get('id_stagiaire');
+
+        $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
+
+        if (!$stagiaire) {
+            throw $this->createNotFoundException();
+        }
+
         $session->removeStagiaire($stagiaire);
 
         $entityManager->flush();
@@ -123,12 +165,28 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}/addModule/{id_module}', name: 'add_module')]
+    #[Route('/session/{id_session}/addModule/{id_module}', name: 'add_module')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
     #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
-    public function addModule(Session $session, Module $module, Request $request, EntityManagerInterface $entityManager): Response
+    public function addModule(Request $request, EntityManagerInterface $entityManager): Response
     {
+        $sessionId = $request->get('id_session');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+        
+        $moduleId = $request->get('id_module');
+
+        $module = $entityManager->getRepository(Module::class)->find($moduleId);
+
+        if (!$module) {
+            throw $this->createNotFoundException();
+        }
+
         $programme = new Programme();
         $programme->setNombreJours($request->request->get('nbJours')); //utilisation de la varaible requete ou on peut obtenir le nombre de jours recuperer depuis le form
 
@@ -142,13 +200,38 @@ class SessionController extends AbstractController
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
-    #[Route('/session/{id}/deleteModule/{id_module}', name: 'delete_module')]
+    #[Route('/session/{id_session}/deleteModule/{id_programme}/{id_module}', name: 'delete_module')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('module', options: ['mapping' => ['id_module' => 'id']])]
-    public function deleteModule(Session $session, Programme $programme, EntityManagerInterface $entityManager): Response
+    #[ParamConverter('programme', options: ['mapping' => ['id_programme' => 'id']])]
+    public function deleteModule(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $programme-getModule()->removeProgramme($programme);
+        $sessionId = $request->get('id_session');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
+        }
+        
+        $moduleId = $request->get('id_module');
+
+        $module = $entityManager->getRepository(Module::class)->find($moduleId);
+
+        if (!$module) {
+            throw $this->createNotFoundException();
+        }
+
+        $programmeId = $request->get('id_programme');
+
+        $programme = $entityManager->getRepository(Programme::class)->find($programmeId);
+
+        if (!$programme) {
+            throw $this->createNotFoundException();
+        }
+
+        $module->removeProgramme($programme);
 
         $session->removeProgramme($programme);
 
