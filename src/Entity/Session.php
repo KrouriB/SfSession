@@ -168,6 +168,6 @@ class Session
 
     public function __ToString(): string
     {
-        return $this->nom.' (du '.$this->dateDebut.' au '.$this->dateFin.')';
+        return $this->nom;
     }
 }
