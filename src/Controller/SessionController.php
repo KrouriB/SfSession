@@ -20,13 +20,42 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class SessionController extends AbstractController
 {
-    #[Route('/session/new', name: 'form_session')]
+    #[Route('/session/new', name: 'add_session')]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $session = new Session();
+
+        $form = $this->createForm(SessionType::class, $session);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $session = $form->getData();
+            $entityManager->persist($session);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->render('session/form.html.twig', [
+            'session' => $form->createView(),
+            'edit' => $session->getId()
+        ]);
+    }
+
     #[Route('/session/{id}/edit', name: 'edit_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    public function new(Session $session = null, Request $request, EntityManagerInterface $entityManager): Response
+    #[ParamConverter('session', options: ['mapping' => ['id' => 'id']])]
+    public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
-        if(!$session){
-            $session = new Session();
+        $sessionId = $request->get('id');
+
+        $session = $entityManager->getRepository(Session::class)->find($sessionId);
+
+        if (!$session) {
+            throw $this->createNotFoundException();
         }
 
         $form = $this->createForm(SessionType::class, $session);
