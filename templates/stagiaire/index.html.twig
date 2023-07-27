@@ -30,7 +30,7 @@
                     <th>{{stagiaire.telephone}}</th>
                     {% set enSession = false %}
                     {% for aSession in stagiaire.sessions %}
-                        {% if aSession.dateDebut <= "now"|date and aSession.dateFin >= "now"|date %} <!-- TODO: A tester  -->
+                        {% if ( (today|date('Y') > aSession.dateDebut|date('Y')) or ((today|date('Y') == aSession.dateDebut|date('Y')) and (today|date('m') > aSession.dateDebut|date('m'))) or ((today|date('Y') == aSession.dateDebut|date('Y')) and (today|date('m') == aSession.dateDebut|date('m')) and (today|date('d') >= aSession.dateDebut|date('d'))) and (today|date('Y') < aSession.dateFin|date('Y')) or ((today|date('Y') == aSession.dateFin|date('Y')) and (today|date('m') < aSession.dateFin|date('m'))) or ((today|date('Y') == aSession.dateFin|date('Y')) and (today|date('m') == aSession.dateFin|date('m')) and (today|date('d') <= aSession.dateFin|date('d'))) ) %} <!-- test année -> mois -> jour car trst de full date sur twig ne marche pas comme voulu -->
                             {% set enSession = true %}
                         {% endif %}
                     {% endfor %}
