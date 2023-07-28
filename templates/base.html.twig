@@ -16,28 +16,34 @@
     </head>
     <body>
         <header>
-            <div class="container-fluid bg-dark">
-                <nav class="justify-content-between d-flex flex-row ">
+            <nav class="navbar-expand-lg bg-dark">
+                <div class="d-flex flex-row justify-content-between container-fluid">
+                    <div class="d-flex flex-row align-items-center ">
+                        <h2>
+                            <a href="{{ path('app_home')}}" class="text-white navbar-brand me-3">Elan</a>
+                        </h2>
+                        {% if app.user %}
+                            <ul class="d-flex align-items-center nav">
+                                <li><span class="text-white"><i class="fa-solid fa-circle-user"></i> {{ app.user.pseudo }}</span></li>
+                                <li><a href="{{ path('app_logout')}}" class="nav-link text-white">Déconnexion</a></li>
+                            </ul>
+                        {% endif %}
+                    </div>
                     {% if app.user %}
-                        <ul class="d-flex flex-row align-items-center nav">
-                            <li><a href="{{ path('app_home')}}" class="nav-link text-white" class="navbar-brand">Elan</a></li>
-                            <li><span class="text-white"><i class="fa-solid fa-circle-user"></i> {{ app.user.pseudo }}</span></li>
-                            <li><a href="{{ path('app_logout')}}" class="nav-link text-white">Déconnexion</a></li>
-                        </ul>
-                        <ul class="nav">
-                            <li class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">Session</a>
-                                <ul class="dropdown-menu bg-dark">
-                                    <li><a href="{{ path('past_session')}}" class="dropdown-item text-white bg-dark">Passé</a></li>
-                                    <li><a href="{{ path('now_session')}}" class="dropdown-item text-white bg-dark">En Cours</a></li>
-                                    <li><a href="{{ path('futur_session')}}" class="dropdown-item text-white bg-dark">{{ 'à'|upper }} venir</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="{{ path('app_stagiaire')}}" class="nav-link text-white">Stagiaire</a></li>
-                        </ul>
+                    <ul class="nav">
+                        <li class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle text-white" data-bs-toggle="dropdown">Session</a>
+                            <ul class="dropdown-menu bg-dark">
+                                <li><a href="{{ path('past_session')}}" class="dropdown-item text-white bg-dark">Passé</a></li>
+                                <li><a href="{{ path('now_session')}}" class="dropdown-item text-white bg-dark">En Cours</a></li>
+                                <li><a href="{{ path('futur_session')}}" class="dropdown-item text-white bg-dark">{{ 'à'|upper }} venir</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{{ path('app_stagiaire')}}" class="nav-link text-white">Stagiaire</a></li>
                     {% endif %}
-                </nav>
-            </div>
+                    </ul>
+                </div>
+            </nav>
         </header>
         <main>
             <div class="container-fluid">
