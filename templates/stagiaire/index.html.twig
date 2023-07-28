@@ -4,13 +4,13 @@
 
 {% block body %}
     <h1>Liste des stagiaire :</h1>
-    <table>
+    <table class="table table-secondary table-striped table-hover table-bordered">
         <thead>
             <tr>
                 <th>Nom</th>
                 <th>Prenom</th>
-                <th>Sexe</th>
-                <th>Date de Naissance</th>
+                <th class="text-center">Sexe</th>
+                <th class="text-end">Date de Naissance</th>
                 <th>Ville</th>
                 <th>Email</th>
                 <th>Téléphone</th>
@@ -23,8 +23,8 @@
                 <tr>
                     <th>{{stagiaire.nom}}</th>
                     <th>{{stagiaire.prenom}}</th>
-                    <th>{{stagiaire.sexe}}</th>
-                    <th>{{stagiaire.dateNaissance|date('d/m/Y') }}</th>
+                    <th class="text-center">{{stagiaire.sexe}}</th>
+                    <th class="text-end">{{stagiaire.dateNaissance|date('d/m/Y') }}</th>
                     <th>{{stagiaire.ville}}</th>
                     <th>{{stagiaire.email}}</th>
                     <th>{{stagiaire.telephone}}</th>
@@ -34,17 +34,17 @@
                             {% set enSession = true %}
                         {% endif %}
                     {% endfor %}
-                    <th>
+                    <th class="text-center">
                         {% if enSession == true %}
-                            <span>Oui</span>
+                            <span class="col badge bg-success">Oui</span>
                         {% else %}
-                            <span>Non</span>
+                            <span class="col badge bg-danger">Non</span>
                         {% endif %}
                     </th>
-                    <th><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}">placeholder icone</a></th>
+                    <th class="text-center"><a href="{{ path('show_stagiaire',{'id': stagiaire.id})}}" class="text-warning"><i class="fa-solid fa-user-pen"></i></a></th>
                 </tr>
             {% endfor %}
-            <tr><th><a href="{{ path('form_stagiaire')}}">Ajouter un stagiaire</a></th></tr>
+            <tr><th class="text-center" colspan="9"><a href="{{ path('form_stagiaire')}}" class="link-primary">Ajouter un stagiaire</a></th></tr>
         </tbody>
     </table> 
 {% endblock %}
