@@ -32,7 +32,7 @@
                             {% set module = programme.module %}
                             {% if titre1 == "" or titre1 != module.categorie.nom %} <!-- tester la variable si elle est vide ou si elle contient un nom de categorie different des precedent -->
                                 <tr>
-                                    <th>{{module.categorie.nom}} <a href="{{ path('edit_categorie',{'id': module.categorie.id})}}">edit</a></th>
+                                    <th colspan="3" class="text-center">{{module.categorie.nom}} <a href="{{ path('edit_categorie',{'id': module.categorie.id})}}">edit</a></th>
                                 </tr>
                                 {% set titre1 = module.categorie.nom %} <!-- donner comme valeur a la variable le nom de la categorie -->
                             {% endif %}
@@ -62,7 +62,7 @@
                     {% for module in notInModule %} <!-- boucle sur tout les modules -->
                         {% if titre2 == "" or titre2 != module.categorie.nom %}
                             <tr>
-                                <th>{{module.categorie.nom}} <a href="{{ path('edit_categorie',{'id': module.categorie.id})}}">edit</a></th>
+                                <th colspan="3" class="text-center">{{module.categorie.nom}} <a href="{{ path('edit_categorie',{'id': module.categorie.id})}}">edit</a></th>
                             </tr>
                             {% set titre2 = module.categorie.nom %}
                         {% endif %}
