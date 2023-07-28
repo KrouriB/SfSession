@@ -111,15 +111,10 @@
                 <a href="{{ path('add_categorie') }}" class="col-1 btn btn-primary btn-sm">Ajouter une categorie</a>
             </div>
     {% else %}
-        <div class="containe-fluid row">
-            <div class="col">
+            <div class="container-fluid">
                 {{ render(controller(
                     'App\\Controller\\HomeController::loginRoute')
                 ) }}
             </div>
-            <div class="col">
-                <a href="{{ path('app_register') }}">Inscrivez vous</a>
-            </div>
-        </div>
     {% endif %}
 {% endblock %}
