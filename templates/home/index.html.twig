@@ -1,121 +1,125 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{% endblock %}
+{% block title %}HomePage{% endblock %}
 
 {% block body %}
 
     {% if app.user %}
             <h1>Acceuil</h1>
-            <div>
+            <div class="row container-fluid table-responsive">
                 <h2>Sessions en cours</h2>
-                <table>
+                <table class="table table-secondary table-striped table-hover table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="table-dark">
                             <th>Statut</th>
                             <th>Formation</th>
                             <th>Session</th>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
-                            <th>Inscrit</th>
+                            <th class="text-end">Date de début</th>
+                            <th class="text-end">Date de fin</th>
+                            <th class="text-center">Inscrit</th>
                             <th>Détail</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for session in now %}
                             <tr>
-                                <th>
+                                <td class="text-center">
                                     {% if session.stagiaires|length == session.nombrePlaceTheorique %}
-                                        <span class="complet">{{ "complète"|upper }}</span>
+                                        <span class="col badge bg-danger">{{ "complète"|upper }}</span>
                                     {% endif %}
-                                </th>
-                                <th>{{session.formation.nom}}</th>
-                                <th>{{session.nom}}</th>
-                                <th>{{session.dateDebut|date('d/m/Y')}}</th>
-                                <th>{{session.dateFin|date('d/m/Y')}}</th>
-                                <th>{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</th>
-                                <th><a href="{{ path('app_session', {'id': session.id})}}">placeholder icone</a></th>
+                                </td>
+                                <td>{{session.formation.nom}}</td>
+                                <td>{{session.nom}}</td>
+                                <td class="text-end">{{session.dateDebut|date('d/m/Y')}}</td>
+                                <td class="text-end">{{session.dateFin|date('d/m/Y')}}</td>
+                                <td class="text-center">{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</td>
+                                <td class="text-center"><a href="{{ path('app_session', {'id': session.id})}}" class="link-warning"><i class="fa-solid fa-pen-to-square"></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div>
-                            <h2>Sessions à venir</h2>
-                            <table>
+            <div class="row container-fluid table-responsive">
+                <h2>Sessions à venir</h2>
+                <table class="table table-secondary table-striped table-hover table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="table-dark">
                             <th>Statut</th>
                             <th>Formation</th>
                             <th>Session</th>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
-                            <th>Inscrit</th>
+                            <th class="text-end">Date de début</th>
+                            <th class="text-end">Date de fin</th>
+                            <th class="text-center">Inscrit</th>
                             <th>Détail</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for session in futur %}
                             <tr>
-                                <th>
+                                <td class="text-center">
                                     {% if session.stagiaires|length == session.nombrePlaceTheorique %}
-                                        <span class="complet"> {{ "complète"|upper }} </span>
+                                        <span class="col badge bg-danger"> {{ "complète"|upper }} </span>
                                     {% endif %}
-                                </th>
-                                <th>{{session.formation.nom}}</th>
-                                <th>{{session.nom}}</th>
-                                <th>{{session.dateDebut|date('d/m/Y')}}</th>
-                                <th>{{session.dateFin|date('d/m/Y')}}</th>
-                                <th>{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</th>
-                                <th><a href="{{ path('app_session', {'id': session.id})}}">placeholder icone</a></th>
+                                </td>
+                                <td>{{session.formation.nom}}</td>
+                                <td>{{session.nom}}</td>
+                                <td class="text-end">{{session.dateDebut|date('d/m/Y')}}</td>
+                                <td class="text-end">{{session.dateFin|date('d/m/Y')}}</td>
+                                <td class="text-center">{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</td>
+                                <td class="text-center"><a href="{{ path('app_session', {'id': session.id})}}" class="link-warning"><i class="fa-solid fa-pen-to-square"></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <div>
-                            <h2>Sessions terminées</h2>
-                            <table>
+            <div class="row container-fluid table-responsive">
+                <h2>Sessions terminées</h2>
+                <table class="table table-secondary table-striped table-hover table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="table-dark">
                             <th>Statut</th>
                             <th>Formation</th>
                             <th>Session</th>
-                            <th>Date de début</th>
-                            <th>Date de fin</th>
-                            <th>Inscrit</th>
+                            <th class="text-end">Date de début</th>
+                            <th class="text-end">Date de fin</th>
+                            <th class="text-center">Inscrit</th>
                             <th>Détail</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for session in past %}
                             <tr>
-                                <th>
+                                <td class="text-center">
                                     {% if session.stagiaires|length == session.nombrePlaceTheorique %}
-                                        <span class="complet"> {{ "complète"|upper }} </span>
+                                        <span class="col badge bg-danger"> {{ "complète"|upper }} </span>
                                     {% endif %}
-                                </th>
-                                <th>{{session.formation.nom}}</th>
-                                <th>{{session.nom}}</th>
-                                <th>{{session.dateDebut|date('d/m/Y')}}</th>
-                                <th>{{session.dateFin|date('d/m/Y')}}</th>
-                                <th>{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</th>
-                                <th><a href="{{ path('app_session', {'id': session.id})}}">placeholder icone</a></th>
+                                </td>
+                                <td>{{session.formation.nom}}</td>
+                                <td>{{session.nom}}</td>
+                                <td class="text-end">{{session.dateDebut|date('d/m/Y')}}</td>
+                                <td class="text-end">{{session.dateFin|date('d/m/Y')}}</td>
+                                <td class="text-center">{{session.stagiaires|length}} / {{session.nombrePlaceTheorique}}</td>
+                                <td class="text-center"><a href="{{ path('app_session', {'id': session.id})}}" class="link-warning"><i class="fa-solid fa-pen-to-square"></i></a></td>
                             </tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
-            <a href="{{ path('add_session') }}">Ajouter une session</a>
-            <a href="{{ path('add_formation') }}">Ajouter une formation</a>
-            <a href="{{ path('add_categorie') }}">Ajouter une categorie</a>
-    {% else %}
-            <div>
-                <a href="{{ path('app_register') }}">Inscrivez vous</a>
+            <div class="row d-flex justify-content-around container-fluid">
+                <a href="{{ path('add_session') }}" class="col-1 btn btn-primary btn-sm">Ajouter une session</a>
+                <a href="{{ path('add_formation') }}" class="col-1 btn btn-primary btn-sm">Ajouter une formation</a>
+                <a href="{{ path('add_categorie') }}" class="col-1 btn btn-primary btn-sm">Ajouter une categorie</a>
             </div>
-            <div>
+    {% else %}
+        <div class="containe-fluid row">
+            <div class="col">
                 {{ render(controller(
                     'App\\Controller\\HomeController::loginRoute')
                 ) }}
             </div>
+            <div class="col">
+                <a href="{{ path('app_register') }}">Inscrivez vous</a>
+            </div>
+        </div>
     {% endif %}
 {% endblock %}

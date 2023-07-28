@@ -4,14 +4,14 @@
 
 {% block body %}
     <h1>Session passé :</h1>
-    <table>
+    <table class="table table-secondary table-striped table-hover table-bordered">
         <thead>
-            <tr>
+            <tr class="table-dark">
                 <th>Nom de la Session</th>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Nombre de place théorique</th>
-                <th>Nombre de place reservées</th>
+                <th class="text-end">Date de début</th>
+                <th class="text-end">Date de fin</th>
+                <th>Place théorique</th>
+                <th>Place reservées</th>
                 <th>Détail</th>
             </tr>
         </thead>
@@ -19,11 +19,11 @@
             {% for session in sessions %}
                 <tr>
                     <th>{{session.nom}}</th>
-                    <th>{{session.dateDebut|date('d/m/Y')}}</th>
-                    <th>{{session.dateFin|date('d/m/Y')}}</th>
+                    <th class="text-end">{{session.dateDebut|date('d/m/Y')}}</th>
+                    <th class="text-end">{{session.dateFin|date('d/m/Y')}}</th>
                     <th>{{session.nombrePlaceTheorique}}</th>
                     <th>{{session.stagiaires|length}}</th>
-                    <th><a href="{{ path('app_session', {'id': session.id})}}">placeholder icone</a></th>
+                    <th class="text-center"><a href="{{ path('app_session', {'id': session.id})}}" class="link-warning"><i class="fa-solid fa-pen-to-square"></i></a></th>
                 </tr>
             {% endfor %}
         </tbody>
