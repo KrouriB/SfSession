@@ -7,6 +7,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class StagiaireCrudController extends AbstractCrudController
 {
+    use Trait\ReadOnlyTrait;
+
     public static function getEntityFqcn(): string
     {
         return Stagiaire::class;
