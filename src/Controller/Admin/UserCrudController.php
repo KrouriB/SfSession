@@ -11,7 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class UserCrudController extends AbstractCrudController
 {
-    use Trait\ReadOnlyTrait;
+    use Trait\noAddTrait;
     
     public static function getEntityFqcn(): string
     {
