@@ -15,7 +15,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class SessionCrudController extends AbstractCrudController
 {
-    use Trait\ReadOnlyTrait;
 
     public static function getEntityFqcn(): string
     {
