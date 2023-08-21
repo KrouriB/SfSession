@@ -64,4 +64,17 @@ class Programme
         return $this;
     }
 
+    public function __ToString(): string
+    {
+        if($this->nombreJours == 1)
+        {
+            $mot = " jour";
+        }
+        else
+        {
+            $mot = " jours";
+        }
+        return $this->module." | durée : ".$this->nombreJours.$mot;
+    }
+
 }
