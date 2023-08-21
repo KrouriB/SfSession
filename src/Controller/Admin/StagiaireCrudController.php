@@ -26,6 +26,7 @@ class StagiaireCrudController extends AbstractCrudController
             IdField::new('id')->onlyOnIndex(),
             TextField::new('nom'),
             TextField::new('prenom'),
+            TextField::new('ville'),
             DateField::new('dateNaissance'),
             EmailField::new('email'),
             TextField::new('telephone'),
