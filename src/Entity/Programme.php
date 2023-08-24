@@ -16,11 +16,11 @@ class Programme
     #[ORM\Column]
     private ?int $nombreJours = null;
 
-    #[ORM\ManyToOne(inversedBy: 'programmes')]
+    #[ORM\ManyToOne(inversedBy: 'programmes', cascade:["persist"])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Session $session = null;
 
-    #[ORM\ManyToOne(inversedBy: 'programmes')]
+    #[ORM\ManyToOne(inversedBy: 'programmes', cascade:["persist"])]
     private ?Module $module = null;
 
     public function getId(): ?int
@@ -64,4 +64,8 @@ class Programme
         return $this;
     }
 
+    public function __ToString(): string
+    {
+        return $this->module." - ".$this->module->getCategorie();
+    }
 }
