@@ -2,13 +2,46 @@ version: '3'
 
 services:
 ###> doctrine/doctrine-bundle ###
-  database:
-    ports:
-      - "5432"
-###< doctrine/doctrine-bundle ###
+  db:
+    image: mysql
+    container_name: db_sf_session
+    restart: always
+    environment:
+      # You should definitely change the password in production
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+    networks:
+      - dev
+    volumes:
+      - db-data:/var/lib/mysql
 
-###> symfony/mailer ###
-  mailer:
-    image: schickling/mailcatcher
-    ports: ["1025", "1080"]
-###< symfony/mailer ###
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin_sf_session
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+    ports:
+      - "8080:80"
+    networks:
+      - dev
+
+  www:
+    build: docker
+    container_name: www_sf_session
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      - ./docker/vhosts:/etc/apache2/sites-enabled
+      - ./:/var/www
+    networks:
+      - dev
+
+
+networks:
+  dev:
+
+volumes:
+  db-data:
