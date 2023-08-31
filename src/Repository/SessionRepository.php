@@ -95,7 +95,7 @@ class SessionRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findStagiaireNotInSession($session_id): array
+    public function findStagiaireNotInSession(int $session_id): array
     {
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
@@ -117,7 +117,7 @@ class SessionRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findModuleNotInSession($session_id): array
+    public function findModuleNotInSession(int $session_id): array
     {
         $em = $this->getEntityManager();
         $sub = $em->createQueryBuilder();
