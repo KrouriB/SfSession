@@ -22,6 +22,8 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class HomeController extends AbstractController
 {
+    private EmailVerifier $emailVerifier;
+
     #[Route('/home', name: 'app_home')]
     public function index(SessionRepository $sessionRepository): Response
     {

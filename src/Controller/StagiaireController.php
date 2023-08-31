@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class StagiaireController extends AbstractController
 {
@@ -43,7 +44,6 @@ class StagiaireController extends AbstractController
 
     #[Route('/stagiaire/{id}/edit', name: 'edit_stagiaire')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('stagiaire', options: ['mapping' => ['id' => 'id']])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $stagiaireId = $request->get('id');
@@ -78,7 +78,6 @@ class StagiaireController extends AbstractController
 
     #[Route('/stagiaire/{id}', name: 'show_stagiaire')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('stagiaire', options: ['mapping' => ['id' => 'id']])]
     public function show(Request $request, EntityManagerInterface $entityManager): Response
     {
         $stagiaireId = $request->get('id');

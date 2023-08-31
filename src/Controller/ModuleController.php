@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ModuleController extends AbstractController
 {
@@ -41,7 +42,6 @@ class ModuleController extends AbstractController
 
     #[Route('/module/{id}/edit', name: 'edit_module')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('module', options: ['mapping' => ['id' => 'id']])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $moduleId = $request->get('id');

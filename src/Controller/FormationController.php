@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class FormationController extends AbstractController
 {
@@ -41,7 +42,6 @@ class FormationController extends AbstractController
 
     #[Route('/formation/{id}/edit', name: 'edit_formation')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
-    #[ParamConverter('formation', options: ['mapping' => ['id' => 'id']])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
     {
         $formationId = $request->get('id');
