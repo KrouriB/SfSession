@@ -31,10 +31,12 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('categorie/form.html.twig', [
-            'categorie' => $form->createView(),
-            'edit' => $categorie->getId()
-        ]);
+        return $this->render(
+            'categorie/form.html.twig', [
+                'categorie' => $form->createView(),
+                'edit' => $categorie->getId()
+            ]
+        );
     }
 
     #[Route('/categorie/{id}/edit', name: 'edit_categorie')]
@@ -63,9 +65,11 @@ class CategorieController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('categorie/form.html.twig', [
-            'categorie' => $form->createView(),
-            'edit' => $categorie->getId()
-        ]);
+        return $this->render(
+            'categorie/form.html.twig', [
+                'categorie' => $form->createView(),
+                'edit' => $categorie->getId()
+            ]
+        );
     }
 }

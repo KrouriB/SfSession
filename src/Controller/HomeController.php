@@ -32,11 +32,13 @@ class HomeController extends AbstractController
         $now = $sessionRepository->findCurrentSessionHomePage();
         $futur = $sessionRepository->findNextSessionHomePage();
         
-        return $this->render('home/index.html.twig', [
-            'past' => $past,
-            'now' => $now,
-            'futur' => $futur
-        ]);
+        return $this->render(
+            'home/index.html.twig', [
+                'past' => $past,
+                'now' => $now,
+                'futur' => $futur
+            ]
+        );
     }
 
     
@@ -51,10 +53,12 @@ class HomeController extends AbstractController
         $error = $authenticationUtils->getLastAuthenticationError();
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
-        return $this->render('home/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error
-        ]);
+        return $this->render(
+            'home/login.html.twig', [
+                'last_username' => $lastUsername,
+                'error' => $error
+            ]
+        );
     }
 
     #[Route('/verify/email', name: 'app_verify_email')]

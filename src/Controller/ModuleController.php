@@ -31,10 +31,12 @@ class ModuleController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('module/form.html.twig', [
-            'module' => $form->createView(),
-            'edit' => $module->getId()
-        ]);
+        return $this->render(
+            'module/form.html.twig', [
+                'module' => $form->createView(),
+                'edit' => $module->getId()
+            ]
+        );
     }
 
     #[Route('/module/{id}/edit', name: 'edit_module')]
@@ -63,9 +65,11 @@ class ModuleController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('module/form.html.twig', [
-            'module' => $form->createView(),
-            'edit' => $module->getId()
-        ]);
+        return $this->render(
+            'module/form.html.twig', [
+                'module' => $form->createView(),
+                'edit' => $module->getId()
+            ]
+        );
     }
 }

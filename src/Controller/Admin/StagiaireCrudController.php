@@ -29,10 +29,12 @@ class StagiaireCrudController extends AbstractCrudController
             DateField::new('dateNaissance'),
             EmailField::new('email'),
             TextField::new('telephone'),
-            ChoiceField::new('sexe')->setChoices([
+            ChoiceField::new('sexe')->setChoices(
+                [
                 'M' => 'M',
                 'F' => 'F',
-            ]),
+                ]
+            ),
             AssociationField::new('sessions'),
         ];
     }

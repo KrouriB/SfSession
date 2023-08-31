@@ -31,10 +31,12 @@ class FormationController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('formation/form.html.twig', [
-            'formation' => $form->createView(),
-            'edit' => $formation->getId()
-        ]);
+        return $this->render(
+            'formation/form.html.twig', [
+                'formation' => $form->createView(),
+                'edit' => $formation->getId()
+            ]
+        );
     }
 
     #[Route('/formation/{id}/edit', name: 'edit_formation')]
@@ -63,9 +65,11 @@ class FormationController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('formation/form.html.twig', [
-            'formation' => $form->createView(),
-            'edit' => $formation->getId()
-        ]);
+        return $this->render(
+            'formation/form.html.twig', [
+                'formation' => $form->createView(),
+                'edit' => $formation->getId()
+            ]
+        );
     }
 }

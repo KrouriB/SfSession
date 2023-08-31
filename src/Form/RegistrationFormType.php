@@ -21,54 +21,68 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            ->add(
+                'email', EmailType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('pseudo', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            )
+            ->add(
+                'pseudo', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'label_attr' => [
-                    'class' => 'form-check-label ms-2'
-                ],
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-                'attr' => [
-                    'class' => 'form-check-input'
+            )
+            ->add(
+                'agreeTerms', CheckboxType::class, [
+                    'label_attr' => [
+                        'class' => 'form-check-label ms-2'
+                    ],
+                    'mapped' => false,
+                    'constraints' => [
+                        new IsTrue(
+                            [
+                            'message' => 'You should agree to our terms.',
+                            ]
+                        ),
+                    ],
+                    'attr' => [
+                        'class' => 'form-check-input'
+                    ]
                 ]
-            ])
-            ->add('plainPassword', RepeatedType::class, [
-                'mapped' => false,
-                'type' => PasswordType::class,
-                'invalid_message' => 'The password fields must match.',
-                'options' => ['attr' => ['class' => 'password-field form-control']],
-                'required' => true,
-                'first_options'  => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
-            ])
-            ->add('valider', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success ms-5'
+            )
+            ->add(
+                'plainPassword', RepeatedType::class, [
+                    'mapped' => false,
+                    'type' => PasswordType::class,
+                    'invalid_message' => 'The password fields must match.',
+                    'options' => ['attr' => ['class' => 'password-field form-control']],
+                    'required' => true,
+                    'first_options'  => ['label' => 'Password'],
+                    'second_options' => ['label' => 'Repeat Password'],
                 ]
-            ]);
+            )
+            ->add(
+                'valider', SubmitType::class, [
+                    'attr' => [
+                        'class' => 'btn btn-success ms-5'
+                    ]
+                ]
+            );
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => User::class,
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id'   => 'user_item',
-        ]);
+            ]
+        );
     }
 }

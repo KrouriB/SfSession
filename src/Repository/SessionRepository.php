@@ -21,9 +21,9 @@ class SessionRepository extends ServiceEntityRepository
         parent::__construct($registry, Session::class);
     }
 
-//    /**
-//     * @return Session[] Returns an array of Session objects
-//     */
+    //    /**
+    //     * @return Session[] Returns an array of Session objects
+    //     */
     public function findCurrentSessionHomePage(): array
     {
         $now = date('Y-m-d');
@@ -34,8 +34,7 @@ class SessionRepository extends ServiceEntityRepository
             ->setMaxResults(2)
             ->setParameter('today', $now)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findPastSessionHomePage(): array
@@ -47,8 +46,7 @@ class SessionRepository extends ServiceEntityRepository
             ->setMaxResults(2)
             ->setParameter('today', $now)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findNextSessionHomePage(): array
@@ -60,11 +58,10 @@ class SessionRepository extends ServiceEntityRepository
             ->setMaxResults(2)
             ->setParameter('today', $now)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
-public function findCurrentSessionSessionPage(): array
+    public function findCurrentSessionSessionPage(): array
     {
         $now = date('Y-m-d');
         return $this->createQueryBuilder('s')
@@ -73,8 +70,7 @@ public function findCurrentSessionSessionPage(): array
             ->orderBy('s.dateFin', 'ASC')
             ->setParameter('today', $now)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findPastSessionSessionPage(): array
@@ -85,8 +81,7 @@ public function findCurrentSessionSessionPage(): array
             ->orderBy('s.dateFin', 'ASC')
             ->setParameter('today', $now)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findNextSessionSessionPage(): array
@@ -97,8 +92,7 @@ public function findCurrentSessionSessionPage(): array
             ->orderBy('s.dateDebut', 'ASC')
             ->setParameter('today', $now)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findStagiaireNotInSession($session_id): array

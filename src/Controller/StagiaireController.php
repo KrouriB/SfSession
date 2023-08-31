@@ -33,10 +33,12 @@ class StagiaireController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('stagiaire/form.html.twig', [
-            'stagiaire' => $form->createView(),
-            'edit' => $stagiaire->getId()
-        ]);
+        return $this->render(
+            'stagiaire/form.html.twig', [
+                'stagiaire' => $form->createView(),
+                'edit' => $stagiaire->getId()
+            ]
+        );
     }
 
     #[Route('/stagiaire/{id}/edit', name: 'edit_stagiaire')]
@@ -65,10 +67,12 @@ class StagiaireController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('stagiaire/form.html.twig', [
-            'stagiaire' => $form->createView(),
-            'edit' => $stagiaire->getId()
-        ]);
+        return $this->render(
+            'stagiaire/form.html.twig', [
+                'stagiaire' => $form->createView(),
+                'edit' => $stagiaire->getId()
+            ]
+        );
     }
 
 
@@ -86,10 +90,12 @@ class StagiaireController extends AbstractController
         }
 
         $today = date('Y-m-d');
-        return $this->render('stagiaire/show.html.twig', [
-            'stagiaire' => $stagiaire,
-            'today' => $today
-        ]);
+        return $this->render(
+            'stagiaire/show.html.twig', [
+                'stagiaire' => $stagiaire,
+                'today' => $today
+            ]
+        );
     }
 
     
@@ -101,10 +107,12 @@ class StagiaireController extends AbstractController
     public function index(StagiaireRepository $stagiaireRepository): Response
     {
         $today = date('Y-m-d');
-        $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
-        return $this->render('stagiaire/index.html.twig', [
-            'stagiaires' => $stagiaires,
-            'today' => $today
-        ]);
+        $stagiaires = $stagiaireRepository->findBy([], ['nom' => 'ASC']);
+        return $this->render(
+            'stagiaire/index.html.twig', [
+                'stagiaires' => $stagiaires,
+                'today' => $today
+            ]
+        );
     }
 }

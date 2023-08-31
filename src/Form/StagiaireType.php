@@ -17,58 +17,76 @@ class StagiaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            ->add(
+                'nom', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('prenom', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            )
+            ->add(
+                'prenom', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('dateNaissance', DateType::class, [
-                'widget' =>'single_text',
-                'attr' => [
-                    'class' => 'form-control'
+            )
+            ->add(
+                'dateNaissance', DateType::class, [
+                    'widget' =>'single_text',
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            )
+            ->add(
+                'email', EmailType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('telephone', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'minlength' => '10',
-                    'maxlength' => '10',
-                    'type' => 'number'
+            )
+            ->add(
+                'telephone', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control',
+                        'minlength' => '10',
+                        'maxlength' => '10',
+                        'type' => 'number'
+                    ]
                 ]
-            ])
-            ->add('sexe', ChoiceType::class, [
-                'choices'  => [
-                    'M' => 'M',
-                    'F' => 'F'
-                ],
-            ])
-            ->add('ville', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            )
+            ->add(
+                'sexe', ChoiceType::class, [
+                    'choices'  => [
+                        'M' => 'M',
+                        'F' => 'F'
+                    ],
                 ]
-            ])
-            ->add('valider', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success'
+            )
+            ->add(
+                'ville', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ]);
+            )
+            ->add(
+                'valider', SubmitType::class, [
+                    'attr' => [
+                        'class' => 'btn btn-success'
+                    ]
+                ]
+            );
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Stagiaire::class,
-        ]);
+            ]
+        );
     }
 }

@@ -18,28 +18,36 @@ class ProgrammeType extends AbstractType
         // $sessionId = $options['session_id'];
 
         $builder
-            ->add('module', EntityType::class, [
-                'class' => Module::class,
-                'choice_label' => 'nom', // Affiche le champ 'nom' de l'entité Module
-                'label' => 'Module',
-                'placeholder' => 'Sélectionnez un module', // Optionnel : affiche un libellé de sélection
-            ])
-            ->add('session', EntityType::class, [
-                'class' => Session::class,
-                'choice_label' => 'nom', // Affiche le champ 'nom' de l'entité Session
-                'label' => 'Session',
-                'row_attr' => ['style' => 'display:none;'], // En mode lecture seule
-            ])
-            ->add('nombreJours', IntegerType::class, [
-                'label' => 'Nombre de Jours',
-            ]);
+            ->add(
+                'module', EntityType::class, [
+                    'class' => Module::class,
+                    'choice_label' => 'nom', // Affiche le champ 'nom' de l'entité Module
+                    'label' => 'Module',
+                    'placeholder' => 'Sélectionnez un module', // Optionnel : affiche un libellé de sélection
+                ]
+            )
+            ->add(
+                'session', EntityType::class, [
+                    'class' => Session::class,
+                    'choice_label' => 'nom', // Affiche le champ 'nom' de l'entité Session
+                    'label' => 'Session',
+                    'row_attr' => ['style' => 'display:none;'], // En mode lecture seule
+                ]
+            )
+            ->add(
+                'nombreJours', IntegerType::class, [
+                    'label' => 'Nombre de Jours',
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Programme::class,
-        ]);
+            ]
+        );
     }
 
     

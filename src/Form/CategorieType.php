@@ -14,23 +14,29 @@ class CategorieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
+            ->add(
+                'nom', TextType::class, [
+                    'attr' => [
+                        'class' => 'form-control'
+                    ]
                 ]
-            ])
-            ->add('valider', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-success'
+            )
+            ->add(
+                'valider', SubmitType::class, [
+                    'attr' => [
+                        'class' => 'btn btn-success'
+                    ]
                 ]
-            ]);
+            );
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
+        $resolver->setDefaults(
+            [
             'data_class' => Categorie::class,
-        ]);
+            ]
+        );
     }
 }

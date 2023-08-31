@@ -39,10 +39,12 @@ class SessionController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('session/form.html.twig', [
-            'session' => $form->createView(),
-            'edit' => $session->getId()
-        ]);
+        return $this->render(
+            'session/form.html.twig', [
+                'session' => $form->createView(),
+                'edit' => $session->getId()
+            ]
+        );
     }
 
     #[Route('/session/{id}/edit', name: 'edit_session')]
@@ -71,10 +73,12 @@ class SessionController extends AbstractController
             return $this->redirectToRoute('app_home');
         }
 
-        return $this->render('session/form.html.twig', [
-            'session' => $form->createView(),
-            'edit' => $session->getId()
-        ]);
+        return $this->render(
+            'session/form.html.twig', [
+                'session' => $form->createView(),
+                'edit' => $session->getId()
+            ]
+        );
     }
 
     #[Route('/session/now', name: 'now_session')]
@@ -82,9 +86,11 @@ class SessionController extends AbstractController
     public function now(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findCurrentSessionSessionPage();
-        return $this->render('session/now.html.twig', [
-            'sessions' => $sessions
-        ]);
+        return $this->render(
+            'session/now.html.twig', [
+                'sessions' => $sessions
+            ]
+        );
     }
     
     #[Route('/session/futur', name: 'futur_session')]
@@ -92,9 +98,11 @@ class SessionController extends AbstractController
     public function futur(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findNextSessionSessionPage();
-        return $this->render('session/futur.html.twig', [
-            'sessions' => $sessions
-        ]);
+        return $this->render(
+            'session/futur.html.twig', [
+                'sessions' => $sessions
+            ]
+        );
     }
     
     #[Route('/session/past', name: 'past_session')]
@@ -102,9 +110,11 @@ class SessionController extends AbstractController
     public function past(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findPastSessionSessionPage();
-        return $this->render('session/past.html.twig', [
-            'sessions' => $sessions
-        ]);
+        return $this->render(
+            'session/past.html.twig', [
+                'sessions' => $sessions
+            ]
+        );
     }
 
     #[Route('/session/{id_session}/addStagiaire/{id_stagiaire}', name: 'add_stagiaire_session')]
@@ -257,16 +267,18 @@ class SessionController extends AbstractController
             throw $this->createNotFoundException();
         }
 
-        $stagiaires = $stagiaireRepository->findBy([],['nom' => 'ASC']);
-        $modules = $moduleRepository->findBy([],['nom' => 'ASC']);
+        $stagiaires = $stagiaireRepository->findBy([], ['nom' => 'ASC']);
+        $modules = $moduleRepository->findBy([], ['nom' => 'ASC']);
         $notInStagiaire = $sessionRepository->findStagiaireNotInSession($sessionId);
         $notInModule = $sessionRepository->findModuleNotInSession($sessionId);
-        return $this->render('session/index.html.twig', [
-            'session' => $session,
-            'stagiaires' => $stagiaires,
-            'notInStagiaire' => $notInStagiaire,
-            'notInModule' => $notInModule,
-            'modules' => $modules
-        ]);
+        return $this->render(
+            'session/index.html.twig', [
+                'session' => $session,
+                'stagiaires' => $stagiaires,
+                'notInStagiaire' => $notInStagiaire,
+                'notInModule' => $notInModule,
+                'modules' => $modules
+            ]
+        );
     }
 }
