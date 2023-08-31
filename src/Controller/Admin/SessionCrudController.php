@@ -16,15 +16,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
-
-
 class SessionCrudController extends AbstractCrudController
 {
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->em = $entityManager;
-    }
-
     public static function getEntityFqcn(): string
     {
         return Session::class;
@@ -68,5 +61,4 @@ class SessionCrudController extends AbstractCrudController
                 ->setEntryType(ProgrammeType::class), // Le formulaire pour chaque entrée
         ];
     }
-    
 }

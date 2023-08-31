@@ -23,7 +23,6 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $categorie = $form->getData();
             $entityManager->persist($categorie);
             $entityManager->flush();
@@ -32,7 +31,8 @@ class CategorieController extends AbstractController
         }
 
         return $this->render(
-            'categorie/form.html.twig', [
+            'categorie/form.html.twig',
+            [
                 'categorie' => $form->createView(),
                 'edit' => $categorie->getId()
             ]
@@ -57,7 +57,6 @@ class CategorieController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $categorie = $form->getData();
             $entityManager->persist($categorie);
             $entityManager->flush();
@@ -66,7 +65,8 @@ class CategorieController extends AbstractController
         }
 
         return $this->render(
-            'categorie/form.html.twig', [
+            'categorie/form.html.twig',
+            [
                 'categorie' => $form->createView(),
                 'edit' => $categorie->getId()
             ]

@@ -19,37 +19,47 @@ class SessionType extends AbstractType
     {
         $builder
             ->add(
-                'nom', TextType::class, [
+                'nom',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'dateDebut', DateType::class, [
-                    'widget' =>'single_text',
+                'dateDebut',
+                DateType::class,
+                [
+                    'widget' => 'single_text',
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'dateFin', DateType::class, [
-                    'widget' =>'single_text',
+                'dateFin',
+                DateType::class,
+                [
+                    'widget' => 'single_text',
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'nombrePlaceTheorique', NumberType::class, [
+                'nombrePlaceTheorique',
+                NumberType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'formation', EntityType::class, [
+                'formation',
+                EntityType::class,
+                [
                     'class' => Formation::class,
                     'choice_label' => 'nom',
                     'attr' => [
@@ -58,7 +68,9 @@ class SessionType extends AbstractType
                 ]
             )
             ->add(
-                'valider', SubmitType::class, [
+                'valider',
+                SubmitType::class,
+                [
                     'attr' => [
                         'class' => 'btn btn-success'
                     ]

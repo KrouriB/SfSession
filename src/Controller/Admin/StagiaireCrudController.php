@@ -13,7 +13,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class StagiaireCrudController extends AbstractCrudController
 {
-
     public static function getEntityFqcn(): string
     {
         return Stagiaire::class;

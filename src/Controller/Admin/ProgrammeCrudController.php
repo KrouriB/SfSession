@@ -11,7 +11,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class ProgrammeCrudController extends AbstractCrudController
 {
-    
     public static function getEntityFqcn(): string
     {
         return Programme::class;

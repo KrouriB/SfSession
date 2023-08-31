@@ -15,14 +15,18 @@ class FormationType extends AbstractType
     {
         $builder
             ->add(
-                'nom', TextType::class, [
+                'nom',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'valider', SubmitType::class, [
+                'valider',
+                SubmitType::class,
+                [
                     'attr' => [
                         'class' => 'btn btn-success'
                     ]

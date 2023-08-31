@@ -66,6 +66,6 @@ class Programme
 
     public function __ToString(): string
     {
-        return $this->module." - ".$this->module->getCategorie();
+        return $this->module . " - " . $this->module->getCategorie();
     }
 }

@@ -18,36 +18,46 @@ class StagiaireType extends AbstractType
     {
         $builder
             ->add(
-                'nom', TextType::class, [
+                'nom',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'prenom', TextType::class, [
+                'prenom',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'dateNaissance', DateType::class, [
-                    'widget' =>'single_text',
+                'dateNaissance',
+                DateType::class,
+                [
+                    'widget' => 'single_text',
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'email', EmailType::class, [
+                'email',
+                EmailType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'telephone', TextType::class, [
+                'telephone',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control',
                         'minlength' => '10',
@@ -57,7 +67,9 @@ class StagiaireType extends AbstractType
                 ]
             )
             ->add(
-                'sexe', ChoiceType::class, [
+                'sexe',
+                ChoiceType::class,
+                [
                     'choices'  => [
                         'M' => 'M',
                         'F' => 'F'
@@ -65,14 +77,18 @@ class StagiaireType extends AbstractType
                 ]
             )
             ->add(
-                'ville', TextType::class, [
+                'ville',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'valider', SubmitType::class, [
+                'valider',
+                SubmitType::class,
+                [
                     'attr' => [
                         'class' => 'btn btn-success'
                     ]

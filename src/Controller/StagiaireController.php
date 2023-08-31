@@ -25,7 +25,6 @@ class StagiaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $stagiaire = $form->getData();
             $entityManager->persist($stagiaire);
             $entityManager->flush();
@@ -34,7 +33,8 @@ class StagiaireController extends AbstractController
         }
 
         return $this->render(
-            'stagiaire/form.html.twig', [
+            'stagiaire/form.html.twig',
+            [
                 'stagiaire' => $form->createView(),
                 'edit' => $stagiaire->getId()
             ]
@@ -59,7 +59,6 @@ class StagiaireController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $stagiaire = $form->getData();
             $entityManager->persist($stagiaire);
             $entityManager->flush();
@@ -68,7 +67,8 @@ class StagiaireController extends AbstractController
         }
 
         return $this->render(
-            'stagiaire/form.html.twig', [
+            'stagiaire/form.html.twig',
+            [
                 'stagiaire' => $form->createView(),
                 'edit' => $stagiaire->getId()
             ]
@@ -91,17 +91,18 @@ class StagiaireController extends AbstractController
 
         $today = date('Y-m-d');
         return $this->render(
-            'stagiaire/show.html.twig', [
+            'stagiaire/show.html.twig',
+            [
                 'stagiaire' => $stagiaire,
                 'today' => $today
             ]
         );
     }
 
-    
 
 
-    
+
+
     #[Route('/stagiaire', name: 'app_stagiaire')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function index(StagiaireRepository $stagiaireRepository): Response
@@ -109,7 +110,8 @@ class StagiaireController extends AbstractController
         $today = date('Y-m-d');
         $stagiaires = $stagiaireRepository->findBy([], ['nom' => 'ASC']);
         return $this->render(
-            'stagiaire/index.html.twig', [
+            'stagiaire/index.html.twig',
+            [
                 'stagiaires' => $stagiaires,
                 'today' => $today
             ]

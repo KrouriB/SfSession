@@ -105,14 +105,14 @@ class SessionRepository extends ServiceEntityRepository
             ->from('App\Entity\Stagiaire', 's')
             ->leftJoin('s.sessions', 'se')
             ->andWhere('se.id = :id');
-        
+
         $sub = $em->createQueryBuilder();
         $sub->select('st')
             ->from('App\Entity\Stagiaire', 'st')
             ->andWhere($sub->expr()->notIn('st.id', $qb->getDQL()))
             ->setParameter('id', $session_id)
             ->orderBy('st.nom');
-        
+
         $query = $sub->getQuery();
         return $query->getResult();
     }
@@ -127,14 +127,14 @@ class SessionRepository extends ServiceEntityRepository
             ->from('App\Entity\Programme', 'p')
             ->leftJoin('p.module', 'm')
             ->andWhere('p.session = :id');
-        
+
         $sub = $em->createQueryBuilder();
         $sub->select('mo')
             ->from('App\Entity\Module', 'mo')
             ->andWhere($sub->expr()->notIn('mo.id', $qb->getDQL()))
             ->setParameter('id', $session_id)
             ->orderBy('mo.categorie');
-        
+
         $query = $sub->getQuery();
         return $query->getResult();
     }

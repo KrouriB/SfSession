@@ -23,7 +23,6 @@ class FormationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $formation = $form->getData();
             $entityManager->persist($formation);
             $entityManager->flush();
@@ -32,7 +31,8 @@ class FormationController extends AbstractController
         }
 
         return $this->render(
-            'formation/form.html.twig', [
+            'formation/form.html.twig',
+            [
                 'formation' => $form->createView(),
                 'edit' => $formation->getId()
             ]
@@ -57,7 +57,6 @@ class FormationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $formation = $form->getData();
             $entityManager->persist($formation);
             $entityManager->flush();
@@ -66,7 +65,8 @@ class FormationController extends AbstractController
         }
 
         return $this->render(
-            'formation/form.html.twig', [
+            'formation/form.html.twig',
+            [
                 'formation' => $form->createView(),
                 'edit' => $formation->getId()
             ]

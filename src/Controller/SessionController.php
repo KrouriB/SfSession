@@ -31,7 +31,6 @@ class SessionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $session = $form->getData();
             $entityManager->persist($session);
             $entityManager->flush();
@@ -40,7 +39,8 @@ class SessionController extends AbstractController
         }
 
         return $this->render(
-            'session/form.html.twig', [
+            'session/form.html.twig',
+            [
                 'session' => $form->createView(),
                 'edit' => $session->getId()
             ]
@@ -65,7 +65,6 @@ class SessionController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $session = $form->getData();
             $entityManager->persist($session);
             $entityManager->flush();
@@ -74,7 +73,8 @@ class SessionController extends AbstractController
         }
 
         return $this->render(
-            'session/form.html.twig', [
+            'session/form.html.twig',
+            [
                 'session' => $form->createView(),
                 'edit' => $session->getId()
             ]
@@ -87,31 +87,34 @@ class SessionController extends AbstractController
     {
         $sessions = $sessionRepository->findCurrentSessionSessionPage();
         return $this->render(
-            'session/now.html.twig', [
+            'session/now.html.twig',
+            [
                 'sessions' => $sessions
             ]
         );
     }
-    
+
     #[Route('/session/futur', name: 'futur_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function futur(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findNextSessionSessionPage();
         return $this->render(
-            'session/futur.html.twig', [
+            'session/futur.html.twig',
+            [
                 'sessions' => $sessions
             ]
         );
     }
-    
+
     #[Route('/session/past', name: 'past_session')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function past(SessionRepository $sessionRepository): Response
     {
         $sessions = $sessionRepository->findPastSessionSessionPage();
         return $this->render(
-            'session/past.html.twig', [
+            'session/past.html.twig',
+            [
                 'sessions' => $sessions
             ]
         );
@@ -130,7 +133,7 @@ class SessionController extends AbstractController
         if (!$session) {
             throw $this->createNotFoundException();
         }
-        
+
         $stagiaireId = $request->get('id_stagiaire');
 
         $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
@@ -144,7 +147,7 @@ class SessionController extends AbstractController
 
         $entityManager->persist($stagiaire);
         $entityManager->flush();
-        
+
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
@@ -152,7 +155,7 @@ class SessionController extends AbstractController
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     #[ParamConverter('session', options: ['mapping' => ['id_session' => 'id']])]
     #[ParamConverter('stagiaire', options: ['mapping' => ['id_stagiaire' => 'id']])]
-    public function deleteStagiaire(Request $request,  EntityManagerInterface $entityManager): Response
+    public function deleteStagiaire(Request $request, EntityManagerInterface $entityManager): Response
     {
         $sessionId = $request->get('id_session');
 
@@ -161,7 +164,7 @@ class SessionController extends AbstractController
         if (!$session) {
             throw $this->createNotFoundException();
         }
-        
+
         $stagiaireId = $request->get('id_stagiaire');
 
         $stagiaire = $entityManager->getRepository(Stagiaire::class)->find($stagiaireId);
@@ -173,7 +176,7 @@ class SessionController extends AbstractController
         $session->removeStagiaire($stagiaire);
 
         $entityManager->flush();
-        
+
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
@@ -190,7 +193,7 @@ class SessionController extends AbstractController
         if (!$session) {
             throw $this->createNotFoundException();
         }
-        
+
         $moduleId = $request->get('id_module');
 
         $module = $entityManager->getRepository(Module::class)->find($moduleId);
@@ -208,7 +211,7 @@ class SessionController extends AbstractController
 
         $entityManager->persist($programme);
         $entityManager->flush();
-        
+
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
@@ -226,7 +229,7 @@ class SessionController extends AbstractController
         if (!$session) {
             throw $this->createNotFoundException();
         }
-        
+
         $moduleId = $request->get('id_module');
 
         $module = $entityManager->getRepository(Module::class)->find($moduleId);
@@ -249,7 +252,7 @@ class SessionController extends AbstractController
 
         $entityManager->remove($programme);
         $entityManager->flush();
-        
+
         return $this->redirectToRoute('app_session', ['id' => $session->getId()]);
     }
 
@@ -272,7 +275,8 @@ class SessionController extends AbstractController
         $notInStagiaire = $sessionRepository->findStagiaireNotInSession($sessionId);
         $notInModule = $sessionRepository->findModuleNotInSession($sessionId);
         return $this->render(
-            'session/index.html.twig', [
+            'session/index.html.twig',
+            [
                 'session' => $session,
                 'stagiaires' => $stagiaires,
                 'notInStagiaire' => $notInStagiaire,

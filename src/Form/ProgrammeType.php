@@ -19,7 +19,9 @@ class ProgrammeType extends AbstractType
 
         $builder
             ->add(
-                'module', EntityType::class, [
+                'module',
+                EntityType::class,
+                [
                     'class' => Module::class,
                     'choice_label' => 'nom', // Affiche le champ 'nom' de l'entité Module
                     'label' => 'Module',
@@ -27,7 +29,9 @@ class ProgrammeType extends AbstractType
                 ]
             )
             ->add(
-                'session', EntityType::class, [
+                'session',
+                EntityType::class,
+                [
                     'class' => Session::class,
                     'choice_label' => 'nom', // Affiche le champ 'nom' de l'entité Session
                     'label' => 'Session',
@@ -35,7 +39,9 @@ class ProgrammeType extends AbstractType
                 ]
             )
             ->add(
-                'nombreJours', IntegerType::class, [
+                'nombreJours',
+                IntegerType::class,
+                [
                     'label' => 'Nombre de Jours',
                 ]
             );
@@ -49,6 +55,4 @@ class ProgrammeType extends AbstractType
             ]
         );
     }
-
-    
 }

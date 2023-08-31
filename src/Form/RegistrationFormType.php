@@ -22,21 +22,27 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add(
-                'email', EmailType::class, [
+                'email',
+                EmailType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'pseudo', TextType::class, [
+                'pseudo',
+                TextType::class,
+                [
                     'attr' => [
                         'class' => 'form-control'
                     ]
                 ]
             )
             ->add(
-                'agreeTerms', CheckboxType::class, [
+                'agreeTerms',
+                CheckboxType::class,
+                [
                     'label_attr' => [
                         'class' => 'form-check-label ms-2'
                     ],
@@ -54,7 +60,9 @@ class RegistrationFormType extends AbstractType
                 ]
             )
             ->add(
-                'plainPassword', RepeatedType::class, [
+                'plainPassword',
+                RepeatedType::class,
+                [
                     'mapped' => false,
                     'type' => PasswordType::class,
                     'invalid_message' => 'The password fields must match.',
@@ -65,7 +73,9 @@ class RegistrationFormType extends AbstractType
                 ]
             )
             ->add(
-                'valider', SubmitType::class, [
+                'valider',
+                SubmitType::class,
+                [
                     'attr' => [
                         'class' => 'btn btn-success ms-5'
                     ]

@@ -23,7 +23,6 @@ class ModuleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $module = $form->getData();
             $entityManager->persist($module);
             $entityManager->flush();
@@ -32,7 +31,8 @@ class ModuleController extends AbstractController
         }
 
         return $this->render(
-            'module/form.html.twig', [
+            'module/form.html.twig',
+            [
                 'module' => $form->createView(),
                 'edit' => $module->getId()
             ]
@@ -57,7 +57,6 @@ class ModuleController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $module = $form->getData();
             $entityManager->persist($module);
             $entityManager->flush();
@@ -66,7 +65,8 @@ class ModuleController extends AbstractController
         }
 
         return $this->render(
-            'module/form.html.twig', [
+            'module/form.html.twig',
+            [
                 'module' => $form->createView(),
                 'edit' => $module->getId()
             ]

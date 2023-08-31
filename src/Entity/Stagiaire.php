@@ -160,6 +160,6 @@ class Stagiaire
 
     public function __ToString(): string
     {
-        return $this->nom.' '.$this->prenom;
+        return $this->nom . ' ' . $this->prenom;
     }
 }

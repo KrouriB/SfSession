@@ -22,18 +22,18 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class HomeController extends AbstractController
 {
-
     #[Route('/home', name: 'app_home')]
     public function index(SessionRepository $sessionRepository): Response
     {
-        
-        
+
+
         $past = $sessionRepository->findPastSessionHomePage();
         $now = $sessionRepository->findCurrentSessionHomePage();
         $futur = $sessionRepository->findNextSessionHomePage();
-        
+
         return $this->render(
-            'home/index.html.twig', [
+            'home/index.html.twig',
+            [
                 'past' => $past,
                 'now' => $now,
                 'futur' => $futur
@@ -41,7 +41,7 @@ class HomeController extends AbstractController
         );
     }
 
-    
+
 
     #[Route('/loginTemplate', name: 'app_login_template')]
     public function loginRoute(AuthenticationUtils $authenticationUtils)
@@ -54,7 +54,8 @@ class HomeController extends AbstractController
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
         return $this->render(
-            'home/login.html.twig', [
+            'home/login.html.twig',
+            [
                 'last_username' => $lastUsername,
                 'error' => $error
             ]

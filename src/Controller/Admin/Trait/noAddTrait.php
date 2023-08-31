@@ -7,7 +7,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 
 trait noAddTrait
 {
-    public function configureActions(Actions $actions) : Actions
+    public function configureActions(Actions $actions): Actions
     {
         $actions
             ->disable(Action::NEW);

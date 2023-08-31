@@ -9,7 +9,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class CategorieCrudController extends AbstractCrudController
 {
-    
     public static function getEntityFqcn(): string
     {
         return Categorie::class;
